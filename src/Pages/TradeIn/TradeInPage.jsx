@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import './TradeInPage.css';
 function TradeInPage() {
 
   return (
