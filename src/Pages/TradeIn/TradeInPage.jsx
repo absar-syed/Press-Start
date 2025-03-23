@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import Navbar from '../../Components/Navbar';
 import './TradeInPage.css';
 function TradeInPage() {
 
   return (
+    <div>
+    <Navbar/>
     <section className="trade-in-page">
       <h2>Trade-In Inventory</h2>
       <input
@@ -24,6 +27,7 @@ function TradeInPage() {
         </tbody>
       </table>
     </section>
+    </div>
   );
 }
 

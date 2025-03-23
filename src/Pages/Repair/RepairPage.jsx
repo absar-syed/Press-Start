@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import Navbar from '../../Components/Navbar';
 import './RepairPage.css';
 function RepairPage() {
 
 
   return (
+    <div>
+    <Navbar />
     <section className="repair-page">
+    
       <h2>Repair Portal</h2>
       <form >
         <label>Name</label>
@@ -31,6 +35,7 @@ function RepairPage() {
         <button type="submit">Submit Repair Request</button>
       </form>
     </section>
+    </div>
   );
 
 }

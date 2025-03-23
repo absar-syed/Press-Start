@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './StockPage.css';
-
+import Navbar from '../../Components/Navbar';
 function StockPage() {
   const [inventory, setInventory] = useState([]);
   const [search, setSearch] = useState('');
@@ -31,6 +31,8 @@ function StockPage() {
   const displayInventory = search ? filteredInventory : inventory;
 
   return (
+    <div>
+    <Navbar/>
     <section className="stock-page">
       <h2>Look Up Inventory</h2>
       <div className="search-container">
@@ -63,6 +65,7 @@ function StockPage() {
         </tbody>
       </table>
     </section>
+    </div>
   );
 }
 

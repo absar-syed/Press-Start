@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import './ClientListPage.css';
-
+import Navbar from '../../Components/Navbar';
 function ClientListPage() {
   return (
+    <div>
+    <Navbar />
     <section className="client-list-page">
       <h2>Client List</h2>
       <input
@@ -23,6 +25,7 @@ function ClientListPage() {
         </tbody>
       </table>
     </section>
+    </div>
   );
 }
 
