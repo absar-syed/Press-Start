@@ -128,7 +128,13 @@ app.get('/api/inventory', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('inventory')
-      .select('*');
+      .select(`
+        *,
+        locations (
+          location_city
+        )
+      `);
+
     if (error) {
       return res.status(500).json({ error: error.message });
     }
@@ -137,6 +143,56 @@ app.get('/api/inventory', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+app.get('/api/clients', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('receipts')
+      .select(`
+        *,
+        clients (
+          client_fname, client_lname, client_email, client_phone
+        ),
+        employees (
+          employee_fname
+        )
+      `);
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+    res.status(200).json({ data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+app.get('/api/repairs', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('repairorders')
+      .select(`
+        *,
+        clients (
+          client_fname, client_lname, client_email, client_phone
+        ),
+        employees (
+          employee_fname
+        )
+      `);
+
+    if (error) {
+      return res.status(500).json({ error: error.message });
+    }
+    res.status(200).json({ data });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

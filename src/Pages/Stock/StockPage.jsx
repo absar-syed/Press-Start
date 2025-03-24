@@ -51,7 +51,13 @@ function StockPage() {
           <tr>
             <th>Item Type</th>
             <th>Title</th>
+            <th>Description</th>
             <th>Condition</th>
+            <th>Price</th>
+            <th>Special Edition</th>
+            <th>Manual</th>
+            <th>Box</th>
+            <th>Location</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +65,13 @@ function StockPage() {
             <tr key={item.inventoryid}>
               <td>{item.inventory_type}</td>
               <td>{item.inventory_name}</td>
+              <td>{item.inventory_description}</td>
               <td>{item.inventory_condition}</td>
+              <td>{item.inventory_price}</td>
+              <td>{item.inventory_special_edition ? 'Yes' : 'No'}</td> 
+              <td>{item.inventory_manual ? 'Yes' : 'No'}</td>           
+              <td>{item.inventory_box ? 'Yes' : 'No'}</td> 
+              <td>{item.locations?.location_city}</td>
             </tr>
           ))}
         </tbody>

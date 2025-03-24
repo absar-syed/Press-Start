@@ -60,7 +60,7 @@ function Navbar() {
           /* Links shown only if user is logged in */
           <>
             <li><Link to="/stock">Stock</Link></li>
-            <li><Link to="/trade-in">Trade-In</Link></li>
+            <li><Link to="/repair-list">Repair List</Link></li>
             <li><Link to="/repair">Repair</Link></li>
             <li><Link to="/clients">Clients</Link></li>
             <li>
