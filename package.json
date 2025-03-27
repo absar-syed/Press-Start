@@ -5,6 +5,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
     "bcrypt": "^5.1.1",
+    "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "cra-template": "1.2.0",
     "dotenv": "^16.4.7",

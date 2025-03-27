@@ -1,25 +1,31 @@
-/* RepairListPage.css */
-
 .repair-list-page {
   padding: 40px;
-  background-color: #F5EFFF; /* match your palette */
-  color: #333;
+  background-color: #0e0b1d; /* dark base for neon contrast */
+  color: #F5EFFF;
   text-align: center;
   min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .repair-list-page h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  color: #CDC1FF;
 }
 
 .repair-list-page input[type="text"] {
   padding: 10px;
   width: 300px;
-  border: 1px solid #ccc;
+  border: 1px solid #A294F9;
   border-radius: 4px;
   margin-right: 10px;
   font-size: 1rem;
+  background-color: #1e1b2f;
+  color: #fff;
+}
+
+.repair-list-page input[type="text"]::placeholder {
+  color: #aaa;
 }
 
 .repair-list-page button {
@@ -30,29 +36,34 @@
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .repair-list-page button:hover {
   background-color: #CDC1FF;
+  transform: scale(1.05);
 }
 
 .repair-list-page table {
   width: 100%;
   max-width: 1000px;
-  margin: 20px auto;
+  margin: 30px auto;
   border-collapse: collapse;
+  background-color: #1e1b2f;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(162, 148, 249, 0.3);
 }
 
 .repair-list-page th,
 .repair-list-page td {
-  border: 1px solid #ccc;
-  padding: 10px;
+  border: 1px solid #333;
+  padding: 12px 15px;
   text-align: left;
 }
 
 .repair-list-page th {
-  background-color: #E5D9F2;
+  background-color: #2a2544;
+  color: #CDC1FF;
   font-weight: bold;
 }
 
@@ -101,6 +112,7 @@
     position: absolute;
     left: 10px;
     font-weight: bold;
+    color: #CDC1FF;
     text-align: left;
   }
 }

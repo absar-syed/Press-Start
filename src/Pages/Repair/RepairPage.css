@@ -1,85 +1,92 @@
-/* RepairPage.css */
-
 /* Base Styles */
 .repair-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-    background-color: #f9f9f9; /* Light neutral background */
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #0e0b1d; /* Dark base */
+  min-height: 100vh;
+  color: #F5EFFF;
+}
+
+.repair-page h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #CDC1FF;
+}
+
+.repair-page form {
+  background-color: #1e1b2f;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(162, 148, 249, 0.2);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.repair-page form label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #E5D9F2;
+}
+
+.repair-page form input,
+.repair-page form textarea,
+.repair-page select {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #A294F9;
+  border-radius: 4px;
+  background-color: #2c2746;
+  color: #F5EFFF;
+}
+
+.repair-page form input::placeholder,
+.repair-page form textarea::placeholder {
+  color: #aaa;
+}
+
+.repair-page form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.repair-page form button {
+  padding: 12px;
+  font-size: 1rem;
+  background-color: #A294F9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.repair-page form button:hover {
+  background-color: #CDC1FF;
+  transform: scale(1.03);
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  .repair-page {
+    padding: 20px;
   }
-  
+
   .repair-page h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 1.5rem;
   }
-  
+
   .repair-page form {
-    background-color: #fff; /* White form background */
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
+    padding: 20px;
+    width: 90%;
   }
-  
-  .repair-page form label {
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #444;
-  }
-  
-  .repair-page form input,
-  .repair-page form textarea {
-    margin-bottom: 15px;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .repair-page form textarea {
-    resize: vertical;
-    min-height: 100px;
-  }
-  
+
   .repair-page form button {
-    padding: 12px;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+    padding: 10px;
   }
-  
-  .repair-page form button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Responsive Styles */
-  @media (max-width: 600px) {
-    .repair-page {
-      padding: 20px;
-    }
-    
-    .repair-page h2 {
-      font-size: 1.5rem;
-    }
-    
-    .repair-page form {
-      padding: 20px;
-      width: 90%;
-    }
-    
-    .repair-page form button {
-      font-size: 0.9rem;
-      padding: 10px;
-    }
-  }
-  
+}

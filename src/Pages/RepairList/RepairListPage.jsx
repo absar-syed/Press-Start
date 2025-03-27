@@ -17,15 +17,24 @@ function RepairListPage() {
       .catch((error) => console.error('Error fetching repairs:', error));
   }, []);
 
+  // 1. Convert `search` to lowercase for case-insensitive matching
+  // 2. Check the relevant fields (repair_item, client_fname, employee_fname)
+  // 3. Return matches
   const filteredRepairs = repairs.filter((item) => {
     const searchTerm = search.toLowerCase();
+
+    const repairItem = item.repair_item.toLowerCase();
+    const clientFname = item.clients?.client_fname?.toLowerCase() || '';
+    const employeeFname = item.employees?.employee_fname?.toLowerCase() || '';
+
     return (
-      item.repair_item.toLowerCase().includes(searchTerm) ||
-      item.clients?.client_fname.toLowerCase().includes(searchTerm) ||
-      item.employees?.employee_fname.toLowerCase().includes(searchTerm)
+      repairItem.includes(searchTerm) ||
+      clientFname.includes(searchTerm) ||
+      employeeFname.includes(searchTerm)
     );
   });
 
+  // If there's something in `search`, display the filtered list; otherwise display all
   const displayRepairs = search ? filteredRepairs : repairs;
 
   return (
@@ -40,6 +49,7 @@ function RepairListPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+          {/* This button is optional. Right now, filtering happens automatically onChange. */}
           <button>Search</button>
         </div>
 
@@ -60,7 +70,9 @@ function RepairListPage() {
                 <td>{item.repair_item}</td>
                 <td>{item.repair_issue}</td>
                 <td>{item.repair_start_date}</td>
-                <td>{item.clients?.client_fname} {item.clients?.client_lname}</td>
+                <td>
+                  {item.clients?.client_fname} {item.clients?.client_lname}
+                </td>
                 <td>{item.clients?.client_email}</td>
                 <td>{item.employees?.employee_fname}</td>
               </tr>
@@ -73,3 +85,4 @@ function RepairListPage() {
 }
 
 export default RepairListPage;
+

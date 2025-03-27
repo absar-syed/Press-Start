@@ -167,6 +167,12 @@ app.get('/api/clients', async (req, res) => {
   }
 });
 
+app.get('/api/clients-list', async (req, res) => {
+  const { data, error } = await supabase.from('clients').select('*');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ data });
+});
+
 
 app.get('/api/repairs', async (req, res) => {
   try {
@@ -193,6 +199,31 @@ app.get('/api/repairs', async (req, res) => {
 
 
 
+app.get('/api/employees', async (req, res) => {
+  const { data, error } = await supabase.from('employees').select('*');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ data });
+});
+
+app.post('/api/repairs', async (req, res) => {
+  const { clientid, employeeid, repair_item, repair_issue, repair_start_date } = req.body;
+
+  try {
+    const { error } = await supabase.from('repairorders').insert({
+      clientid: parseInt(clientid),
+      employeeid: parseInt(employeeid),
+      repair_item,
+      repair_issue,
+      repair_start_date: repair_start_date.replaceAll('-', '/'),
+    });
+
+    if (error) throw error;
+    res.status(201).json({ message: 'Repair created successfully' });
+  } catch (err) {
+    console.error('Repair insert error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

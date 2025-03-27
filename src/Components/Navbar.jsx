@@ -70,7 +70,12 @@ function Navbar() {
         ) : (
           /* Links shown only if user is NOT logged in */
           <>
-            <li><Link to="/login">Login</Link></li>
+            <li>
+  <            Link to="/login">
+            <button className="nav-btn">Login</button>
+              </Link>
+            </li>
+
           </>
         )}
       </ul>
