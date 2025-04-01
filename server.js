@@ -225,6 +225,85 @@ app.post('/api/repairs', async (req, res) => {
   }
 });
 
+app.post('/api/clients/signup', async (req, res) => {
+  const { client_fname, client_lname, client_email, client_phone, client_username, client_password } = req.body;
+
+  try {
+    // 1. Check for existing email or username
+    const { data: existing, error: fetchError } = await supabase
+      .from('clients')
+      .select('*')
+      .or(`client_email.eq.${client_email},client_username.eq.${client_username}`);
+
+    if (fetchError) throw fetchError;
+
+    if (existing.length > 0) {
+      return res.status(400).json({ error: 'Email or username already exists.' });
+    }
+
+    // 2. Hash the password
+    const hashedPassword = await bcrypt.hash(client_password, 10);
+
+    // 3. Insert the new client
+    const { error: insertError } = await supabase.from('clients').insert({
+      client_fname,
+      client_lname,
+      client_email,
+      client_phone,
+      client_username,
+      client_password: hashedPassword,
+    });
+
+    if (insertError) throw insertError;
+
+    res.status(201).json({ message: 'Client account created successfully' });
+  } catch (err) {
+    console.error('Client signup error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/locations', async (req, res) => {
+  const { data, error } = await supabase.from('locations').select('*');
+  if (error) return res.status(500).json({ error: error.message });
+  res.json({ data });
+});
+
+app.post('/api/inventory/update', async (req, res) => {
+  const {
+    inventory_name,
+    inventory_description,
+    inventory_type,
+    inventory_price,
+    inventory_condition,
+    inventory_special_edition,
+    inventory_manual,
+    inventory_box,
+    locationid
+  } = req.body;
+
+  try {
+    const { error } = await supabase.from('inventory').insert({
+      inventory_name,
+      inventory_description,
+      inventory_type,
+      inventory_price,
+      inventory_condition,
+      inventory_special_edition,
+      inventory_manual,
+      inventory_box,
+      locationid: parseInt(locationid),
+    });
+
+    if (error) throw error;
+    res.status(201).json({ message: 'Inventory item added successfully' });
+  } catch (err) {
+    console.error('Inventory insert error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

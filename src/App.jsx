@@ -5,9 +5,12 @@ import StockPage from './Pages/Stock/StockPage';
 import RepairList from './Pages/RepairList/RepairListPage';
 import RepairPage from './Pages/Repair/RepairPage';
 import ClientListPage from './Pages/Clients/ClientListPage';
+import StockUpdatePage from './Pages/StockUpdate/StockUpdatePage';
+
 import Footer from './Components/Footer';
 import Login from './Pages/Login/Login';
 import PrivateRoute from "./PrivateRoute"; 
+import ClientsSignUpPage from './Pages/ClientsSignUp/ClientsSignUpPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,6 +43,8 @@ function App() {
           <Route path="/repair" element={<PrivateRoute isLoggedIn={isLoggedIn}><RepairPage /></PrivateRoute>} />
           <Route path="/clients" element={<PrivateRoute isLoggedIn={isLoggedIn}><ClientListPage /></PrivateRoute>} />
           <Route path="/Login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+          <Route path="/clients-sign-up" element={<PrivateRoute isLoggedIn={isLoggedIn}><ClientsSignUpPage /></PrivateRoute>} />
+          <Route path="/stock-update" element={<PrivateRoute isLoggedIn={isLoggedIn}><StockUpdatePage /></PrivateRoute>} />
         </Routes>
         <Footer></Footer>
     </Router>

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './StockPage.css';
 import Navbar from '../../Components/Navbar';
 
 function StockPage() {
   const [inventory, setInventory] = useState([]);
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/inventory')
@@ -17,9 +19,8 @@ function StockPage() {
       .catch((error) => console.error('Error fetching inventory:', error));
   }, []);
 
-  // 1. Convert the user's search term to lowercase.
-  // 2. Check if any relevant field (type, name, condition, etc.) contains the search term.
-  const filteredInventory = inventory.filter((item) => {
+  
+    const filteredInventory = inventory.filter((item) => {
     const searchTerm = search.toLowerCase();
 
     const type = item.inventory_type.toLowerCase();
@@ -44,7 +45,9 @@ function StockPage() {
       <Navbar/>
       <section className="stock-page">
         <h2>Look Up Inventory</h2>
-
+        <div style={{ marginBottom: '1rem' }}>
+          <button onClick={() => navigate('/stock-update')}>Add Inventory</button>
+        </div>
         <div className="search-container">
           <input 
             type="text" 

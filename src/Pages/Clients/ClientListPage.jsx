@@ -1,10 +1,13 @@
+// ClientListPage.jsx
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ClientListPage.css';
 import Navbar from '../../Components/Navbar';
 
 function ClientListPage() {
   const [clients, setClients] = useState([]);
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/clients')
@@ -17,19 +20,14 @@ function ClientListPage() {
       .catch((error) => console.error('Error fetching clients:', error));
   }, []);
 
-  // Filter logic for the fields you want to match
   const filteredClients = clients.filter((item) => {
-    // Convert the search input to lowercase once
     const searchTerm = search.toLowerCase();
-
-    // Convert each field to lowercase safely (using "?." in case they're undefined)
     const clientFname = item.clients?.client_fname?.toLowerCase() || "";
     const clientLname = item.clients?.client_lname?.toLowerCase() || "";
     const clientEmail = item.clients?.client_email?.toLowerCase() || "";
     const employeeFname = item.employees?.employee_fname?.toLowerCase() || "";
     const employeeLname = item.employees?.employee_lname?.toLowerCase() || "";
 
-    // Return true if *any* field contains the search term
     return (
       clientFname.includes(searchTerm) ||
       clientLname.includes(searchTerm) ||
@@ -39,7 +37,6 @@ function ClientListPage() {
     );
   });
 
-  // If user is typing, show filtered list; if no search term, show all
   const displayClients = search ? filteredClients : clients;
 
   return (
@@ -47,6 +44,10 @@ function ClientListPage() {
       <Navbar />
       <section className="client-list-page">
         <h2>Client List</h2>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <button onClick={() => navigate('/clients-sign-up')}>Sign Up New Client</button>
+        </div>
 
         <input
           type="text"
@@ -67,14 +68,10 @@ function ClientListPage() {
           <tbody>
             {displayClients.map((item) => (
               <tr key={item.receiptid}>
-                <td>
-                  {item.clients?.client_fname} {item.clients?.client_lname}
-                </td>
+                <td>{item.clients?.client_fname} {item.clients?.client_lname}</td>
                 <td>{item.clients?.client_email}</td>
                 <td>{item.receipt_date}</td>
-                <td>
-                  {item.employees?.employee_fname} {item.employees?.employee_lname}
-                </td>
+                <td>{item.employees?.employee_fname} {item.employees?.employee_lname}</td>
               </tr>
             ))}
           </tbody>
