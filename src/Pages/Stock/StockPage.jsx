@@ -71,6 +71,7 @@ function StockPage() {
               <th>Manual</th>
               <th>Box</th>
               <th>Location</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -85,6 +86,11 @@ function StockPage() {
                 <td>{item.inventory_manual ? 'Yes' : 'No'}</td>
                 <td>{item.inventory_box ? 'Yes' : 'No'}</td>
                 <td>{item.locations?.location_city}</td>
+                <td class="text-nowrap">
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-primary">UPDATE</button><button type="button" class="btn btn-danger">DELETE</button>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>

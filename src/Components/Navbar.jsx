@@ -49,6 +49,10 @@ function Navbar() {
 
   return (
     <nav className="navbar">
+      <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+      </head>
+
       <div className="logo">
         <Link to="/">Press Start</Link>
       </div>
