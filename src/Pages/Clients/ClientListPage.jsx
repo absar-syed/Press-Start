@@ -22,18 +22,21 @@ function ClientListPage() {
 
   const filteredClients = clients.filter((item) => {
     const searchTerm = search.toLowerCase();
-    const clientFname = item.clients?.client_fname?.toLowerCase() || "";
-    const clientLname = item.clients?.client_lname?.toLowerCase() || "";
-    const clientEmail = item.clients?.client_email?.toLowerCase() || "";
-    const employeeFname = item.employees?.employee_fname?.toLowerCase() || "";
-    const employeeLname = item.employees?.employee_lname?.toLowerCase() || "";
+    const clientFname = item.client_fname?.toLowerCase() || "";
+    const clientLname = item.client_lname?.toLowerCase() || "";
+    const clientEmail = item.client_email?.toLowerCase() || "";
+    const clientUsername = item.client_username?.toLowerCase() || "";
+    const clientPhone = item.client_phone?.toLowerCase() || "";
+    const clientID = String(item.clientid).toLowerCase() || "";
+
 
     return (
       clientFname.includes(searchTerm) ||
       clientLname.includes(searchTerm) ||
       clientEmail.includes(searchTerm) ||
-      employeeFname.includes(searchTerm) ||
-      employeeLname.includes(searchTerm)
+      clientID.includes(searchTerm) ||
+      clientUsername.includes(searchTerm) ||
+      clientPhone.includes(searchTerm)
     );
   });
 
@@ -51,7 +54,7 @@ function ClientListPage() {
 
         <input
           type="text"
-          placeholder="Search clients or employees..."
+          placeholder="Search clients..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
