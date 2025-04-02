@@ -6,6 +6,8 @@ import Navbar from '../../Components/Navbar';
 function StockPage() {
   const [inventory, setInventory] = useState([]);
   const [search, setSearch] = useState('');
+  const [editingRow, setEditingRow] = useState(null);
+  const [editedData, setEditedData] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,45 +21,48 @@ function StockPage() {
       .catch((error) => console.error('Error fetching inventory:', error));
   }, []);
 
-  
-    const filteredInventory = inventory.filter((item) => {
+  const handleUpdateClick = (id, item) => {
+    setEditingRow(id);
+    setEditedData(item);
+  };
+
+  const handleChange = (e, field) => {
+    setEditedData({ ...editedData, [field]: e.target.value });
+  };
+
+  const handleSave = (id) => {
+    setInventory(
+      inventory.map((item) => (item.inventoryid === id ? { ...item, ...editedData } : item))
+    );
+    setEditingRow(null);
+  };
+
+  const handleDelete = (id) => {
+    setInventory(inventory.filter((item) => item.inventoryid !== id));
+  };
+
+  const filteredInventory = inventory.filter((item) => {
     const searchTerm = search.toLowerCase();
-
-    const type = item.inventory_type.toLowerCase();
-    const name = item.inventory_name.toLowerCase();
-    const condition = item.inventory_condition.toLowerCase();
-    const description = item.inventory_description?.toLowerCase() || ''; 
-    // Add as many fields as you want to search over
-
     return (
-      type.includes(searchTerm) ||
-      name.includes(searchTerm) ||
-      condition.includes(searchTerm) ||
-      description.includes(searchTerm)
+      item.inventory_type.toLowerCase().includes(searchTerm) ||
+      item.inventory_name.toLowerCase().includes(searchTerm) ||
+      item.inventory_condition.toLowerCase().includes(searchTerm) ||
+      (item.inventory_description?.toLowerCase() || '').includes(searchTerm)
     );
   });
 
-  // If the user is typing something, show the filtered results. Otherwise show everything.
-  const displayInventory = search ? filteredInventory : inventory;
-
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <section className="stock-page">
         <h2>Look Up Inventory</h2>
-        <div style={{ marginBottom: '1rem' }}>
-          <button onClick={() => navigate('/stock-update')}>Add Inventory</button>
-        </div>
-        <div className="search-container">
-          <input 
-            type="text" 
-            placeholder="Search item types, titles, descriptions, or conditions..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          {/* If you want a button to do something, you can keep it or remove it */}
-          <button>Search</button>
-        </div>
+        <button onClick={() => navigate('/stock-update')}>Add Inventory</button>
+        <input 
+          type="text" 
+          placeholder="Search items..." 
+          value={search} 
+          onChange={(e) => setSearch(e.target.value)} 
+        />
 
         <table>
           <thead>
@@ -71,26 +76,62 @@ function StockPage() {
               <th>Manual</th>
               <th>Box</th>
               <th>Location</th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {displayInventory.map((item) => (
+            {filteredInventory.map((item) => (
               <tr key={item.inventoryid}>
-                <td>{item.inventory_type}</td>
-                <td>{item.inventory_name}</td>
-                <td>{item.inventory_description}</td>
-                <td>{item.inventory_condition}</td>
-                <td>{item.inventory_price}</td>
-                <td>{item.inventory_special_edition ? 'Yes' : 'No'}</td>
-                <td>{item.inventory_manual ? 'Yes' : 'No'}</td>
-                <td>{item.inventory_box ? 'Yes' : 'No'}</td>
-                <td>{item.locations?.location_city}</td>
-                <td class="text-nowrap">
-                  <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-primary">UPDATE</button><button type="button" class="btn btn-danger">DELETE</button>
-                  </div>
-                </td>
+                {editingRow === item.inventoryid ? (
+                  <>
+                    <td>
+                      <select value={editedData.inventory_type} onChange={(e) => handleChange(e, 'inventory_type')}>
+                        <option value="Console">Console</option>
+                        <option value="Accessory">Accessory</option>
+                        <option value="Game">Game</option>
+                      </select>
+                    </td>
+                    <td><input type="text" value={editedData.inventory_name} onChange={(e) => handleChange(e, 'inventory_name')} /></td>
+                    <td><input type="text" value={editedData.inventory_description} onChange={(e) => handleChange(e, 'inventory_description')} /></td>
+                    <td>
+                      <select value={editedData.inventory_condition} onChange={(e) => handleChange(e, 'inventory_condition')}>
+                        <option value="Retro-Excellent">Retro-Excellent</option>
+                        <option value="Retro-Good">Retro-Good</option>
+                        <option value="Retro-Poor">Retro-Poor</option>
+                        <option value="New">New</option>
+                      </select>
+                    </td>
+                    <td><input type="number" value={editedData.inventory_price} onChange={(e) => handleChange(e, 'inventory_price')} /></td>
+                    <td><input type="checkbox" checked={editedData.inventory_special_edition} onChange={(e) => handleChange(e, 'inventory_special_edition')} /></td>
+                    <td><input type="checkbox" checked={editedData.inventory_manual} onChange={(e) => handleChange(e, 'inventory_manual')} /></td>
+                    <td><input type="checkbox" checked={editedData.inventory_box} onChange={(e) => handleChange(e, 'inventory_box')} /></td>
+                    <td><input type="text" value={editedData.locations?.location_city} onChange={(e) => handleChange(e, 'location_city')} /></td>
+                    <td class="text-nowrap">
+                      <div class="d-flex gap-2">
+                        <button onClick={() => handleSave(item.inventoryid)}>Save</button>
+                        <button onClick={() => setEditingRow(null)}>Cancel</button>
+                      </div>
+                    </td>
+                  </>
+                ) : (
+                  <>
+                    <td>{item.inventory_type}</td>
+                    <td>{item.inventory_name}</td>
+                    <td>{item.inventory_description}</td>
+                    <td>{item.inventory_condition}</td>
+                    <td>{item.inventory_price}</td>
+                    <td>{item.inventory_special_edition ? 'Yes' : 'No'}</td>
+                    <td>{item.inventory_manual ? 'Yes' : 'No'}</td>
+                    <td>{item.inventory_box ? 'Yes' : 'No'}</td>
+                    <td>{item.locations?.location_city}</td>
+                    <td class="text-nowrap">
+                      <div class="d-flex gap-2">
+                        <button onClick={() => handleUpdateClick(item.inventoryid, item)}>Update</button>
+                        <button onClick={() => handleDelete(item.inventoryid)}>Delete</button>
+                      </div>
+                    </td>
+                  </>
+                )}
               </tr>
             ))}
           </tbody>
