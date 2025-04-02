@@ -50,19 +50,20 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="logo">
-        <Link to="/">Press Start</Link>
+        <Link to="/">
+        <i className="fas fa-gamepad"></i> <span className="logo-text"></span> Press Start</Link>
       </div>
       <ul>
         {/* Always show Home link */}
-        <li><Link to="/">Home</Link></li>
+        <li><Link to="/"><i className="fas fa-house"></i>  Home</Link></li>
         
         {user ? (
           /* Links shown only if user is logged in */
           <>
-            <li><Link to="/stock">Stock</Link></li>
-            <li><Link to="/repair-list">Repair List</Link></li>
-            <li><Link to="/repair">Repair</Link></li>
-            <li><Link to="/clients">Clients</Link></li>
+            <li><Link to="/stock"><i className="fas fa-cubes"></i>  Stock</Link></li>
+            <li><Link to="/repair-list"><i className="fas fa-screwdriver-wrench"></i>  Repair List</Link></li>
+            <li><Link to="/repair"><i className="fas fa-toolbox"></i> Repair</Link></li>
+            <li><Link to="/clients"><i className="fas fa-user-tie"></i> Clients</Link></li>
             <li>
               <button onClick={handleLogout}>Logout</button>
             </li>
@@ -72,7 +73,7 @@ function Navbar() {
           <>
             <li>
   <            Link to="/login">
-            <button className="nav-btn">Login</button>
+            <button className="nav-btn"><i className="fas fa-sign-in-alt"></i> Login</button>
               </Link>
             </li>
 
