@@ -17,9 +17,8 @@ function RepairListPage() {
       .catch((error) => console.error('Error fetching repairs:', error));
   }, []);
 
-  // 1. Convert `search` to lowercase for case-insensitive matching
-  // 2. Check the relevant fields (repair_item, client_fname, employee_fname)
-  // 3. Return matches
+  // Search logic
+  // Filter repairs based on search term
   const filteredRepairs = repairs.filter((item) => {
     const searchTerm = search.toLowerCase();
 
@@ -34,7 +33,7 @@ function RepairListPage() {
     );
   });
 
-  // If there's something in `search`, display the filtered list; otherwise display all
+  // If there's something in search, display the filtered list,  otherwise display all
   const displayRepairs = search ? filteredRepairs : repairs;
 
   return (
@@ -49,8 +48,6 @@ function RepairListPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          {/* This button is optional. Right now, filtering happens automatically onChange. */}
-          <button>Search</button>
         </div>
 
         <table>

@@ -38,7 +38,7 @@ function RepairPage() {
     e.preventDefault();
 
     try {
-      // form.repair_start_date is already "MM/DD/YY" at this point
+      
       const payload = { ...form };
 
       const res = await fetch('http://localhost:5000/api/repairs', {

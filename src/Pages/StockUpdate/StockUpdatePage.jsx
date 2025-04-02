@@ -72,7 +72,7 @@ function StockInsertPage() {
         <h2>Add New Inventory Item</h2>
         {message && <p>{message}</p>}
         <form onSubmit={handleSubmit}>
-          <input name="inventory_name" placeholder="Name" value={formData.inventory_name} onChange={handleChange} required />
+          <input name="inventory_name" placeholder="Name" value={formData.inventory_name} onChange={handleChange} required maxLength={250} />
           <input name="inventory_description" placeholder="Description" value={formData.inventory_description} onChange={handleChange} required />
           <input name="inventory_price" placeholder="Price" type="number" value={formData.inventory_price} onChange={handleChange} required />
 

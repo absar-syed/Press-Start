@@ -35,7 +35,7 @@ app.use(passport.session());
 
 // Set up PostgreSQL connection pool using Supabase connection string (session pool)
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // e.g., your session pool connection string
+  connectionString: process.env.DATABASE_URL, // your session pool connection string
   ssl: { rejectUnauthorized: false },
 });
 
@@ -118,12 +118,12 @@ app.post('/logout', (req, res, next) => {
   });
 });
 
-// Initialize Supabase client (for other API endpoints)
+// Initialize Supabase client 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Example endpoint to fetch inventory data from Supabase
+
 app.get('/api/inventory', async (req, res) => {
   try {
     const { data, error } = await supabase
@@ -229,7 +229,7 @@ app.post('/api/clients/signup', async (req, res) => {
   const { client_fname, client_lname, client_email, client_phone, client_username, client_password } = req.body;
 
   try {
-    // 1. Check for existing email or username
+    
     const { data: existing, error: fetchError } = await supabase
       .from('clients')
       .select('*')
@@ -241,10 +241,10 @@ app.post('/api/clients/signup', async (req, res) => {
       return res.status(400).json({ error: 'Email or username already exists.' });
     }
 
-    // 2. Hash the password
+    
     const hashedPassword = await bcrypt.hash(client_password, 10);
 
-    // 3. Insert the new client
+    
     const { error: insertError } = await supabase.from('clients').insert({
       client_fname,
       client_lname,
@@ -302,6 +302,45 @@ app.post('/api/inventory/update', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+app.put('/api/inventory/:id', async (req, res) => {
+  const { id } = req.params;
+  const updateFields = req.body;
+
+  try {
+    const { error } = await supabase
+      .from('inventory')
+      .update(updateFields)
+      .eq('inventoryid', id);
+
+    if (error) throw error;
+
+    res.json({ message: 'Inventory updated successfully' });
+  } catch (err) {
+    console.error('Inventory update error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+app.delete('/api/inventory/:id', async (req, res) => { 
+  const { id } = req.params;
+
+  try {
+    const { error } = await supabase
+      .from('inventory')
+      .delete()
+      .eq('inventoryid', id);
+
+    if (error) throw error;
+
+    res.json({ message: 'Inventory deleted successfully' });
+  } catch (err) {
+    console.error('Inventory delete error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 
 app.listen(PORT, () => {
