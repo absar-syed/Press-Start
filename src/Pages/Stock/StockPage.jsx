@@ -6,50 +6,80 @@ import Navbar from '../../Components/Navbar';
 function StockPage() {
   const [inventory, setInventory] = useState([]);
   const [search, setSearch] = useState('');
-  const [editingRow, setEditingRow] = useState(null);
-  const [editedData, setEditedData] = useState({});
+  const [editingId, setEditingId] = useState(null);
+  const [editValues, setEditValues] = useState({});
   const navigate = useNavigate();
 
+  // Fetch inventory
   useEffect(() => {
     fetch('http://localhost:5000/api/inventory')
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((result) => {
-        if (result.data) {
-          setInventory(result.data);
-        }
+        if (result.data) setInventory(result.data);
       })
-      .catch((error) => console.error('Error fetching inventory:', error));
+      .catch((err) => console.error('Error fetching inventory:', err));
   }, []);
 
-  const handleUpdateClick = (id, item) => {
-    setEditingRow(id);
-    setEditedData(item);
-  };
-
-  const handleChange = (e, field) => {
-    setEditedData({ ...editedData, [field]: e.target.value });
-  };
-
-  const handleSave = (id) => {
-    setInventory(
-      inventory.map((item) => (item.inventoryid === id ? { ...item, ...editedData } : item))
-    );
-    setEditingRow(null);
-  };
-
-  const handleDelete = (id) => {
-    setInventory(inventory.filter((item) => item.inventoryid !== id));
-  };
-
+  // Search logic
   const filteredInventory = inventory.filter((item) => {
-    const searchTerm = search.toLowerCase();
+    const term = search.toLowerCase();
     return (
-      item.inventory_type.toLowerCase().includes(searchTerm) ||
-      item.inventory_name.toLowerCase().includes(searchTerm) ||
-      item.inventory_condition.toLowerCase().includes(searchTerm) ||
-      (item.inventory_description?.toLowerCase() || '').includes(searchTerm)
+      item.inventory_type.toLowerCase().includes(term) ||
+      item.inventory_name.toLowerCase().includes(term) ||
+      item.inventory_condition.toLowerCase().includes(term) ||
+      (item.inventory_description?.toLowerCase() || '').includes(term)
     );
   });
+
+  const startEditing = (item) => {
+    setEditingId(item.inventoryid);
+    setEditValues({
+      ...item,  // Include all the fields needed to edit
+    });
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const saveChanges = async (id) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/inventory/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editValues),
+      });
+
+      if (!res.ok) throw new Error('Update failed');
+
+      setInventory((prev) => prev.map(item => item.inventoryid === id ? { ...item, ...editValues } : item));
+      setEditingId(null);
+    } catch (err) {
+      console.error(err);
+      alert("Error saving changes.");
+    }
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditValues({});
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/inventory/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) throw new Error('Delete failed');
+      setInventory((prev) => prev.filter((item) => item.inventoryid !== id));
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting item.");
+    }
+  };
 
   return (
     <div>
@@ -57,8 +87,7 @@ function StockPage() {
       <section className="stock-page">
         <h2>Look Up Inventory</h2>
         <button onClick={() => navigate('/stock-update')}>Add Inventory</button>
-        <br></br>
-        <br></br>
+        <br /><br />
         <input 
           type="text" 
           placeholder="Search items..." 
@@ -95,7 +124,7 @@ function StockPage() {
                 <td>{item.locations?.location_city}</td>
                 <td className="text-nowrap">
                   <div className="d-flex gap-2">
-                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onClick={() => handleUpdateClick(item.inventoryid, item)}>Update</button>
+                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onClick={() => startEditing(item)}>Update</button>
                     <button className="btn btn-danger" onClick={() => handleDelete(item.inventoryid)}>Delete</button>
                   </div>
                 </td>
@@ -105,7 +134,7 @@ function StockPage() {
         </table>
       </section>
 
-      {/*Modal*/}
+      {/* Modal */}
       <div className="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content bg-dark text-white">
@@ -115,28 +144,63 @@ function StockPage() {
             </div>
             <div className="modal-body">
               <label>Item Type</label>
-              <select className="form-control" value={editedData.inventory_type} onChange={(e) => handleChange(e, 'inventory_type')}>
+              <select className="form-control" name="inventory_type" value={editValues.inventory_type} onChange={handleEditChange}>
                 <option value="Console">Console</option>
                 <option value="Accessory">Accessory</option>
                 <option value="Game">Game</option>
               </select>
+
               <label>Title</label>
-              <input className="form-control" type="text" value={editedData.inventory_name} onChange={(e) => handleChange(e, 'inventory_name')} />
+              <input className="form-control" name="inventory_name" type="text" value={editValues.inventory_name} onChange={handleEditChange} />
+
               <label>Description</label>
-              <input className="form-control" type="text" value={editedData.inventory_description} onChange={(e) => handleChange(e, 'inventory_description')} />
+              <input className="form-control" name="inventory_description" type="text" value={editValues.inventory_description} onChange={handleEditChange} />
+
               <label>Condition</label>
-              <select className="form-control" value={editedData.inventory_condition} onChange={(e) => handleChange(e, 'inventory_condition')}>
+              <select className="form-control" name="inventory_condition" value={editValues.inventory_condition} onChange={handleEditChange}>
                 <option value="Retro-Excellent">Retro-Excellent</option>
                 <option value="Retro-Good">Retro-Good</option>
                 <option value="Retro-Poor">Retro-Poor</option>
                 <option value="New">New</option>
               </select>
+
               <label>Price</label>
-              <input className="form-control" type="number" value={editedData.inventory_price} onChange={(e) => handleChange(e, 'inventory_price')} />
+              <input className="form-control" name="inventory_price" type="number" value={editValues.inventory_price} onChange={handleEditChange} />
+
+              <label>Special Edition</label>
+              <div className="form-check">
+                <input className="form-check-input" type="radio" name="inventory_special_edition" value="true" checked={editValues.inventory_special_edition === 'true'} onChange={handleEditChange} />
+                <label className="form-check-label">Yes</label>
+              </div>
+              <div className="form-check">
+                <input className="form-check-input" type="radio" name="inventory_special_edition" value="false" checked={editValues.inventory_special_edition === 'false'} onChange={handleEditChange} />
+                <label className="form-check-label">No</label>
+              </div>
+
+              <label>Manual</label>
+              <div className="form-check">
+                <input className="form-check-input" type="radio" name="inventory_manual" value="true" checked={editValues.inventory_manual === 'true'} onChange={handleEditChange} />
+                <label className="form-check-label">Yes</label>
+              </div>
+              <div className="form-check">
+                <input className="form-check-input" type="radio" name="inventory_manual" value="false" checked={editValues.inventory_manual === 'false'} onChange={handleEditChange} />
+                <label className="form-check-label">No</label>
+              </div>
+
+              <label>Box</label>
+              <div className="form-check">
+                <input className="form-check-input" type="radio" name="inventory_box" value="true" checked={editValues.inventory_box === 'true'} onChange={handleEditChange} />
+                <label className="form-check-label">Yes</label>
+              </div>
+              <div className="form-check">
+                <input className="form-check-input" type="radio" name="inventory_box" value="false" checked={editValues.inventory_box === 'false'} onChange={handleEditChange} />
+                <label className="form-check-label">No</label>
+              </div>
             </div>
+
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary" onClick={() => handleSave(editingRow)} data-bs-dismiss="modal">Save Changes</button>
+              <button type="button" className="btn btn-secondary" onClick={cancelEdit} data-bs-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-success" onClick={() => saveChanges(editingId)} data-bs-dismiss="modal">Save Changes</button>
             </div>
           </div>
         </div>

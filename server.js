@@ -147,16 +147,8 @@ app.get('/api/inventory', async (req, res) => {
 app.get('/api/clients', async (req, res) => {
   try {
     const { data, error } = await supabase
-      .from('receipts')
-      .select(`
-        *,
-        clients (
-          client_fname, client_lname, client_email, client_phone
-        ),
-        employees (
-          employee_fname
-        )
-      `);
+      .from('clients')
+      .select(`*`);
 
     if (error) {
       return res.status(500).json({ error: error.message });

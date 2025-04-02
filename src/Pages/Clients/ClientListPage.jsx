@@ -59,19 +59,21 @@ function ClientListPage() {
         <table>
           <thead>
             <tr>
-              <th>Client Name</th>
+              <th>ClientID</th>
+              <th>Name</th>
+              <th>Username</th>
               <th>Email</th>
-              <th>Purchase Date</th>
-              <th>Handled By</th>
+              <th>Phone Number</th>
             </tr>
           </thead>
           <tbody>
             {displayClients.map((item) => (
-              <tr key={item.receiptid}>
-                <td>{item.clients?.client_fname} {item.clients?.client_lname}</td>
-                <td>{item.clients?.client_email}</td>
-                <td>{item.receipt_date}</td>
-                <td>{item.employees?.employee_fname} {item.employees?.employee_lname}</td>
+              <tr key={item.clientid}>
+                <td>{item.clientid}</td>
+                <td>{item.client_fname} {item.client_lname}</td>
+                <td>{item.client_username}</td>
+                <td>{item.client_email}</td>
+                <td>{item.client_phone}</td>
               </tr>
             ))}
           </tbody>
