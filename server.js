@@ -363,3 +363,33 @@ app.delete('/api/inventory/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+app.put('/api/inventory/:id', async (req, res) => {
+  const { id } = req.params;
+  const {inventory_name, inventory_description, inventory_type, inventory_price, inventory_num, inventory_condition, inventory_special_edition, inventory_manual, inventory_box, locationid } = req.body;
+
+  try {
+    const { error } = await supabase
+      .from('inventory')
+      .update({
+        inventory_name,
+        inventory_description,
+        inventory_type,
+        inventory_price,
+        inventory_num,
+        inventory_condition,
+        inventory_special_edition,
+        inventory_manual,
+        inventory_box,
+        locationid: parseInt(locationid),
+      })
+      .eq('inventoryid', id);
+
+    if (error) throw error;
+
+    res.json({ message: 'Item updated successfully' });
+  } catch (err) {
+    console.error('Item update error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
