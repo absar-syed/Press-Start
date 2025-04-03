@@ -48,21 +48,17 @@ function ClientSignUpPage() {
       <div className="repair-page">
         <h2>Client Sign-Up</h2>
         {message && <p className="message">{message}</p>}
+
         <form onSubmit={handleSubmit}>
-          {["client_fname", "client_lname", "client_email", "client_phone", "client_username", "client_password"].map((field) => (
-            <div key={field} className="form-group">
-              <label>{field.replace('client_', '').toUpperCase()}</label>
-              <input
-                name={field}
-                type={field === 'client_password' ? 'password' : 'text'}
-                value={formData[field]}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          ))}
+          <input name='client_fname' placeholder='First Name' type='text' value={formData.client_fname} onChange={handleChange} required maxLength={25}/>
+          <input name='client_lname' placeholder='Last Name' type='text' value={formData.client_lname} onChange={handleChange} required maxLength={25}/>
+          <input name='client_email' placeholder='Email' type='email' value={formData.client_email} onChange={handleChange} required maxLength={100}/>
+          <input name='client_phone' placeholder='Phone Number Example(1234567890)' type='tel' pattern="[0-9]{3}[0-9]{3}[0-9]{4}" value={formData.client_phone} onChange={handleChange} required maxLength={10} min={0} max={9999999999}/>
+          <input name='client_username' placeholder='Username' type='text' value={formData.client_username} onChange={handleChange} required maxLength={25}/>
+          <input name='client_password' placeholder='Password' type='password' value={formData.client_password} onChange={handleChange} required maxLength={25}/>
           <button type="submit">Sign Up</button>
         </form>
+        
       </div>
     </div>
   );
