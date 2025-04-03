@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
+
+//  font awesome imports from https://docs.fontawesome.com/v5/web/use-with/react & https://youtu.be/ReatjIrst8w 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGamepad, faHouse, faDoorClosed, faDoorOpen, faWarehouse, faScrewdriverWrench, faToolbox, faUserTie } from '@fortawesome/free-solid-svg-icons';
+
+
 function Navbar() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -51,21 +57,21 @@ function Navbar() {
     <nav className="navbar">
       <div className="logo">
         <Link to="/">
-        <i className="fas fa-gamepad"></i> <span className="logo-text"></span> Press Start</Link>
+        <span className="logo-text"><FontAwesomeIcon icon= {faGamepad} size="lg" /> Press Start</span></Link>
       </div>
       <ul>
         {/* Always show Home link */}
-        <li><Link to="/"><i className="fas fa-house"></i>  Home</Link></li>
+        <li><Link to="/"><FontAwesomeIcon icon= {faHouse} size="lg" /> Home</Link></li>
         
         {user ? (
           /* Links shown only if user is logged in */
           <>
-            <li><Link to="/stock"><i className="fas fa-cubes"></i>  Stock</Link></li>
-            <li><Link to="/repair-list"><i className="fas fa-screwdriver-wrench"></i>  Repair List</Link></li>
-            <li><Link to="/repair"><i className="fas fa-toolbox"></i> Repair</Link></li>
-            <li><Link to="/clients"><i className="fas fa-user-tie"></i> Clients</Link></li>
+            <li><Link to="/stock"><FontAwesomeIcon icon={faWarehouse} size="lg"/> Stock</Link></li>
+            <li><Link to="/repair-list"><FontAwesomeIcon icon={faToolbox} size="lg"/> Repair List</Link></li>
+            <li><Link to="/repair"><FontAwesomeIcon icon={faScrewdriverWrench} size="lg" /> Repair</Link></li>
+            <li><Link to="/clients"><FontAwesomeIcon icon={faUserTie} size="lg" /> Clients</Link></li>
             <li>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogout}><FontAwesomeIcon icon={faDoorOpen} size="lg" /> Logout</button>
             </li>
           </>
         ) : (
@@ -73,7 +79,7 @@ function Navbar() {
           <>
             <li>
   <            Link to="/login">
-            <button className="nav-btn"><i className="fas fa-sign-in-alt"></i> Login</button>
+            <button className="nav-btn"><FontAwesomeIcon icon={faDoorClosed} size="lg" /> Login</button>
               </Link>
             </li>
 
