@@ -344,3 +344,22 @@ app.put('/api/clients/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+
+app.delete('/api/inventory/:id', async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    const { error } = await supabase
+      .from('inventory')
+      .delete()
+      .eq('inventoryid', id);
+ 
+    if (error) throw error;
+ 
+    res.json({ message: 'Item deleted successfully' });
+  } catch (err) {
+    console.error('Item delete error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
