@@ -31,7 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "service": "concurrently \"npm run server\" \"npm install -g serve \" \"serve -s build\""
+    "service": "concurrently \"npm run server\" \"serve -s build\""
   },
   "eslintConfig": {
     "extends": [
