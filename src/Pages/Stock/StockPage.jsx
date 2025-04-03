@@ -39,8 +39,11 @@ function StockPage() {
   };
 
   const handleEditChange = (e) => {
-    const { name, value } = e.target;
-    setEditValues((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    setEditValues((prev) => ({
+      ...prev,
+      [name]: type === "radio" ? (value === "true") : value,
+    }));
   };
 
   const saveChanges = async (id) => {
@@ -172,7 +175,7 @@ function StockPage() {
               <label>Quantity</label>
               <input className="form-control" name="inventory_num" type="number" value={editValues.inventory_num} onChange={handleEditChange} />
 
-              <label>Special Edition</label>
+              {/* <label>Special Edition</label>
               <div className="form-check">
                 <input className="form-check-input" type="radio" name="inventory_special_edition" value="true" checked={editValues.inventory_special_edition === 'true'} onChange={handleEditChange} />
                 <label className="form-check-label">Yes</label>
@@ -180,27 +183,87 @@ function StockPage() {
               <div className="form-check">
                 <input className="form-check-input" type="radio" name="inventory_special_edition" value="false" checked={editValues.inventory_special_edition === 'false'} onChange={handleEditChange} />
                 <label className="form-check-label">No</label>
-              </div>
+              </div> */}
 
-              <label>Manual</label>
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="inventory_manual" value="true" checked={editValues.inventory_manual === 'true'} onChange={handleEditChange} />
-                <label className="form-check-label">Yes</label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="inventory_manual" value="false" checked={editValues.inventory_manual === 'false'} onChange={handleEditChange} />
-                <label className="form-check-label">No</label>
-              </div>
+            <label>Special Edition</label>
+            <br />
+            <div className="btn-group-sm" role="group" aria-label="Special Edition">
+              <input
+                type="radio"
+                className="btn-check"
+                name="inventory_special_edition"
+                id="btnradio5"
+                value="true"
+                checked={editValues.inventory_special_edition === true || editValues.inventory_special_edition === 'true'}
+                onChange={handleEditChange}
+              />
+              <label className="btn btn-outline-light" htmlFor="btnradio5">Yes</label>
 
-              <label>Box</label>
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="inventory_box" value="true" checked={editValues.inventory_box === 'true'} onChange={handleEditChange} />
-                <label className="form-check-label">Yes</label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="inventory_box" value="false" checked={editValues.inventory_box === 'false'} onChange={handleEditChange} />
-                <label className="form-check-label">No</label>
-              </div>
+              <input
+                type="radio"
+                className="btn-check"
+                name="inventory_special_edition"
+                id="btnradio6"
+                value="false"
+                checked={editValues.inventory_special_edition === false || editValues.inventory_special_edition === 'false'}
+                onChange={handleEditChange}
+              />
+              <label className="btn btn-outline-light" htmlFor="btnradio6">No</label>
+            </div>
+
+            <label>Manual</label>
+            <br />
+            <div className="btn-group-sm" role="group" aria-label="Manual">
+              <input
+                type="radio"
+                className="btn-check"
+                name="inventory_manual"
+                id="btnradio1"
+                value="true"
+                checked={editValues.inventory_manual === true || editValues.inventory_manual === 'true'}
+                onChange={handleEditChange}
+              />
+              <label className="btn btn-outline-light" htmlFor="btnradio1">Yes</label>
+
+              <input
+                type="radio"
+                className="btn-check"
+                name="inventory_manual"
+                id="btnradio2"
+                value="false"
+                checked={editValues.inventory_manual === false || editValues.inventory_manual === 'false'}
+                onChange={handleEditChange}
+              />
+              <label className="btn btn-outline-light" htmlFor="btnradio2">No</label>
+            </div>
+
+            <label>Box</label>
+            <br />
+            <div className="btn-group-sm" role="group" aria-label="Box">
+              <input
+                type="radio"
+                className="btn-check"
+                name="inventory_box"
+                id="btnradio3"
+                value="true"
+                checked={editValues.inventory_box === true || editValues.inventory_box === 'true'}
+                onChange={handleEditChange}
+              />
+              <label className="btn btn-outline-light" htmlFor="btnradio3">Yes</label>
+
+              <input
+                type="radio"
+                className="btn-check"
+                name="inventory_box"
+                id="btnradio4"
+                value="false"
+                checked={editValues.inventory_box === false || editValues.inventory_box === 'false'}
+                onChange={handleEditChange}
+              />
+              <label className="btn btn-outline-light" htmlFor="btnradio4">No</label>
+            </div>
+
+
             </div>
 
             <div className="modal-footer">
