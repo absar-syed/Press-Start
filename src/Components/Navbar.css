@@ -1,11 +1,15 @@
-/* Navbar Styles */
+/* Styles for navigation bar
+Includes layout, icon spacing, hover effects, button styling
+Mobile responsive adjustments included */
 
+/* HTML and Body */
 html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Navbar Styles */
 .navbar {
     display: flex;
     justify-content: space-between;

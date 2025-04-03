@@ -1,3 +1,5 @@
+// Shows list of all repair orders with search
+
 import { useState, useEffect } from 'react';
 import Navbar from '../../Components/Navbar';
 import './RepairListPage.css';

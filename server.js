@@ -1,3 +1,7 @@
+// Node.js backend with Express + Supabase
+// Handles login, logout, session handling with Passport
+// Provides APIs for inventory, clients, repairs, etc.
+
 const express = require('express');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();

@@ -1,3 +1,6 @@
+// Checks if user is authenticated
+// If not, redirect to login
+
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 

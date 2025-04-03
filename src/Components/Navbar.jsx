@@ -1,3 +1,8 @@
+// The navigation bar shows logo + nav links depending on login state
+// Icons are added using Font Awesome React
+// When logged in: show full menu with logout
+// When not logged in: show login only
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';

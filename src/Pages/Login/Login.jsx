@@ -1,3 +1,6 @@
+// Login form with username/password
+// Sends POST to /login and redirects to /stock on success
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';

@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #007bff; /* Navbar background color */
+  background-color: #007bff; 
   padding: 1rem 2rem;
 }
 
@@ -43,7 +43,7 @@
 
 /* Footer Styles */
 .footer {
-  background-color: #333; /* Footer background color */
+  background-color: #333; 
   color: #fff;
   text-align: center;
   padding: 1rem 0;
