@@ -120,17 +120,20 @@ function ClientListPage() {
             <label>ClientID (Read-Only)</label>
             <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
 
-            <label>Name</label>
-            <input className="form-control" name="clientname" type="text" value={`${selectedClient?.client_fname} ${selectedClient?.client_lname}`} readOnly/>
+            <label>First Name</label>
+            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_fname}/>
+
+            <label>Last Name</label>
+            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_lname}/>
 
             <label>Username</label>
-            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username} readOnly/>
+            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username}/>
 
             <label>Email</label>
-            <input className="form-control" name="clientemail" type="text" value={selectedClient?.client_email} readOnly/>
+            <input className="form-control" name="clientemail" type="text" value={selectedClient?.client_email}/>
 
             <label>Phone Number</label>
-            <input className="form-control" name="clientphone" type="text" value={selectedClient?.client_phone} readOnly/>
+            <input className="form-control" name="clientphone" type="text" value={selectedClient?.client_phone}/>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
