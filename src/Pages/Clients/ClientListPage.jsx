@@ -43,6 +43,23 @@ function ClientListPage() {
 
   const displayClients = search ? filteredClients : clients;
 
+  // delete client
+  const deleteClient = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this client?")) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
+        method: 'DELETE'
+      });
+ 
+      if (!res.ok) throw new Error('Delete failed');
+      
+      setClients((prevClients) => prevClients.filter((client) => client.clientid !== id));
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting client.");
+    }};
+  
+
   return (
     <div>
       <Navbar />
@@ -82,7 +99,7 @@ function ClientListPage() {
                 <td className="text-nowrap">
                   <div className="d-flex gap-2">
                     <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onClick={() => setSelectedClient(item)}>Update</button>
-                    <button className="btn btn-danger" >Delete</button>
+                    <button className="btn btn-danger" onClick={() => deleteClient(item.clientid)}>Delete</button>
                   </div>
                 </td>
               </tr>
@@ -100,7 +117,7 @@ function ClientListPage() {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-            <label>ClientID</label>
+            <label>ClientID (Read-Only)</label>
             <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
 
             <label>Name</label>

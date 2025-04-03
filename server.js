@@ -299,3 +299,21 @@ app.post('/api/inventory/update', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+app.delete('/api/clients/:id', async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    const { error } = await supabase
+      .from('clients')
+      .delete()
+      .eq('clientid', id);
+ 
+    if (error) throw error;
+ 
+    res.json({ message: 'Client deleted successfully' });
+  } catch (err) {
+    console.error('Client delete error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
