@@ -98,7 +98,7 @@ function StockPage() {
           onChange={(e) => setSearch(e.target.value)} 
         />
 
-        <table>
+        <table class="mb-5">
           <thead>
             <tr>
               <th>Item Type</th>
