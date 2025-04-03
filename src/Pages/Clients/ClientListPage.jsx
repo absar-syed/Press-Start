@@ -59,6 +59,33 @@ function ClientListPage() {
       alert("Error deleting client.");
     }};
   
+    // update client
+    const updateClient = async () => {
+      if (!selectedClient) return;
+    
+      try {
+        const res = await fetch(`http://localhost:5000/api/clients/${selectedClient.clientid}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(selectedClient)
+        });
+    
+        if (!res.ok) throw new Error('Update failed');
+    
+        // Update state
+        setClients((prevClients) =>
+          prevClients.map((client) =>
+            client.clientid === selectedClient.clientid ? selectedClient : client
+          )
+        );
+    
+        alert('Client updated successfully');
+      } catch (err) {
+        console.error(err);
+        alert('Error updating client.');
+      }
+    };
+    
 
   return (
     <div>
@@ -121,23 +148,23 @@ function ClientListPage() {
             <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
 
             <label>First Name</label>
-            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_fname}/>
+            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_fname} onChange={(e) => setSelectedClient({ ...selectedClient, client_fname: e.target.value })}/>
 
             <label>Last Name</label>
-            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_lname}/>
+            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_lname} onChange={(e) => setSelectedClient({ ...selectedClient, client_lname: e.target.value })}/>
 
             <label>Username</label>
-            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username}/>
+            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username} onChange={(e) => setSelectedClient({ ...selectedClient, client_username: e.target.value })}/>
 
             <label>Email</label>
-            <input className="form-control" name="clientemail" type="text" value={selectedClient?.client_email}/>
+            <input className="form-control" name="clientemail" type="email" value={selectedClient?.client_email} onChange={(e) => setSelectedClient({ ...selectedClient, client_email: e.target.value })}/>
 
             <label>Phone Number</label>
-            <input className="form-control" name="clientphone" type="text" value={selectedClient?.client_phone}/>
+            <input className="form-control" name="clientphone" type="text" value={selectedClient?.client_phone} onChange={(e) => setSelectedClient({ ...selectedClient, client_phone: e.target.value })}/>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" className="btn btn-success" data-bs-dismiss="modal">Save Changes</button>
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={updateClient}>Save Changes</button>
             </div>
           </div>
         </div>

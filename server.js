@@ -317,3 +317,28 @@ app.delete('/api/clients/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+app.put('/api/clients/:id', async (req, res) => {
+  const { id } = req.params;
+  const { client_fname, client_lname, client_email, client_phone, client_username } = req.body;
+
+  try {
+    const { error } = await supabase
+      .from('clients')
+      .update({
+        client_fname,
+        client_lname,
+        client_email,
+        client_phone,
+        client_username
+      })
+      .eq('clientid', id);
+
+    if (error) throw error;
+
+    res.json({ message: 'Client updated successfully' });
+  } catch (err) {
+    console.error('Client update error:', err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
