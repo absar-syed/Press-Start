@@ -149,7 +149,7 @@ function StockPage() {
               <h5 className="modal-title" id="editModalLabel">Edit Inventory</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div className="modal-body">
+            <form className='m-2' onSubmit={(e) => { e.preventDefault(); saveChanges(editingId); }}>
               <label>Item Type</label>
               <select className="form-control" name="inventory_type" value={editValues.inventory_type} onChange={handleEditChange}>
                 <option value="Console">Console</option>
@@ -158,10 +158,10 @@ function StockPage() {
               </select>
 
               <label>Title</label>
-              <input className="form-control" name="inventory_name" type="text" value={editValues.inventory_name} onChange={handleEditChange} maxLength={50}/>
+              <input className="form-control" name="inventory_name" type="text" value={editValues.inventory_name} onChange={handleEditChange} required maxLength={50} />
 
               <label>Description</label>
-              <input className="form-control" name="inventory_description" type="text" value={editValues.inventory_description} onChange={handleEditChange} maxLength={250}/>
+              <input className="form-control" name="inventory_description" type="text" value={editValues.inventory_description} onChange={handleEditChange} required maxLength={250} />
 
               <label>Condition</label>
               <select className="form-control" name="inventory_condition" value={editValues.inventory_condition} onChange={handleEditChange}>
@@ -172,96 +172,59 @@ function StockPage() {
               </select>
 
               <label>Price</label>
-              <input className="form-control" name="inventory_price" type="number" value={editValues.inventory_price} onChange={handleEditChange} min={0}/>
+              <input className="form-control" name="inventory_price" type="number" value={editValues.inventory_price} onChange={handleEditChange} min={0} required/>
 
               <label>Quantity</label>
-              <input className="form-control" name="inventory_num" type="number" value={editValues.inventory_num} onChange={handleEditChange} min={0} max={100}/>
+              <input className="form-control" name="inventory_num" type="number" value={editValues.inventory_num} onChange={handleEditChange} min={0} max={100} required />
 
               <label>Special Edition</label>
               <br />
-              <div className="btn-group-sm" role="group" aria-label="Special Edition">
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="inventory_special_edition"
-                  id="btnradio5"
-                  value="true"
-                  checked={editValues.inventory_special_edition === true || editValues.inventory_special_edition === 'true'}
-                  onChange={handleEditChange}
-                />
+              <div className="btn-group-sm" role="group">
+                <input type="radio" className="btn-check" name="inventory_special_edition" id="btnradio5" value="true"
+                  checked={editValues.inventory_special_edition === true || editValues.inventory_special_edition === 'true'} onChange={handleEditChange} />
                 <label className="btn btn-outline-light" htmlFor="btnradio5">Yes</label>
 
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="inventory_special_edition"
-                  id="btnradio6"
-                  value="false"
-                  checked={editValues.inventory_special_edition === false || editValues.inventory_special_edition === 'false'}
-                  onChange={handleEditChange}
-                />
+                <input type="radio" className="btn-check" name="inventory_special_edition" id="btnradio6" value="false"
+                  checked={editValues.inventory_special_edition === false || editValues.inventory_special_edition === 'false'} onChange={handleEditChange} />
                 <label className="btn btn-outline-light" htmlFor="btnradio6">No</label>
               </div>
 
               <label>Manual</label>
               <br />
-              <div className="btn-group-sm" role="group" aria-label="Manual">
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="inventory_manual"
-                  id="btnradio1"
-                  value="true"
-                  checked={editValues.inventory_manual === true || editValues.inventory_manual === 'true'}
-                  onChange={handleEditChange}
-                />
+              <div className="btn-group-sm" role="group">
+                <input type="radio" className="btn-check" name="inventory_manual" id="btnradio1" value="true"
+                  checked={editValues.inventory_manual === true || editValues.inventory_manual === 'true'} onChange={handleEditChange} />
                 <label className="btn btn-outline-light" htmlFor="btnradio1">Yes</label>
 
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="inventory_manual"
-                  id="btnradio2"
-                  value="false"
-                  checked={editValues.inventory_manual === false || editValues.inventory_manual === 'false'}
-                  onChange={handleEditChange}
-                />
+                <input type="radio" className="btn-check" name="inventory_manual" id="btnradio2" value="false"
+                  checked={editValues.inventory_manual === false || editValues.inventory_manual === 'false'} onChange={handleEditChange} />
                 <label className="btn btn-outline-light" htmlFor="btnradio2">No</label>
               </div>
 
               <label>Box</label>
               <br />
-              <div className="btn-group-sm" role="group" aria-label="Box">
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="inventory_box"
-                  id="btnradio3"
-                  value="true"
-                  checked={editValues.inventory_box === true || editValues.inventory_box === 'true'}
-                  onChange={handleEditChange}
-                />
+              <div className="btn-group-sm" role="group">
+                <input type="radio" className="btn-check" name="inventory_box" id="btnradio3" value="true"
+                  checked={editValues.inventory_box === true || editValues.inventory_box === 'true'} onChange={handleEditChange} />
                 <label className="btn btn-outline-light" htmlFor="btnradio3">Yes</label>
 
-                <input
-                  type="radio"
-                  className="btn-check"
-                  name="inventory_box"
-                  id="btnradio4"
-                  value="false"
-                  checked={editValues.inventory_box === false || editValues.inventory_box === 'false'}
-                  onChange={handleEditChange}
-                />
+                <input type="radio" className="btn-check" name="inventory_box" id="btnradio4" value="false"
+                  checked={editValues.inventory_box === false || editValues.inventory_box === 'false'} onChange={handleEditChange} />
                 <label className="btn btn-outline-light" htmlFor="btnradio4">No</label>
               </div>
 
+              <br/>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={cancelEdit} data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" className="btn btn-success" data-bs-dismiss="modal">Save Changes</button>
+              </div>
+            </form>
 
-            </div>
 
-            <div className="modal-footer">
+            {/* <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={cancelEdit} data-bs-dismiss="modal">Cancel</button>
               <button type="button" className="btn btn-success" onClick={() => saveChanges(editingId)} data-bs-dismiss="modal">Save Changes</button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
