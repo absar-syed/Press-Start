@@ -1,0 +1,83 @@
+/* Wrapper around the whole page */
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0e0b1d; /* Dark neon base */
+}
+
+/* Center the form vertically and horizontally */
+.login-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Form styling */
+.login-container form {
+  background: #1e1b2f;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(162, 148, 249, 0.3);
+  width: 100%;
+  max-width: 350px;
+}
+
+/* Headings */
+.login-container h2 {
+  color: #CDC1FF;
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.login-container label {
+  color: #E5D9F2;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Inputs */
+.login-container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #2c2746;
+  color: #F5EFFF;
+  border: 1px solid #A294F9;
+  border-radius: 4px;
+}
+
+/* Placeholder color */
+.login-container input::placeholder {
+  color: #aaa;
+}
+
+/* Submit button */
+.login-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #A294F9;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+  background-color: #CDC1FF;
+  transform: scale(1.02);
+}
+
+/* Error message styling */
+.error {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: center;
+}
