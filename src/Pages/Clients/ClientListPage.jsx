@@ -7,6 +7,7 @@ import Navbar from '../../Components/Navbar';
 function ClientListPage() {
   const [clients, setClients] = useState([]);
   const [search, setSearch] = useState('');
+  const [selectedClient, setSelectedClient] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -67,6 +68,7 @@ function ClientListPage() {
               <th>Username</th>
               <th>Email</th>
               <th>Phone Number</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -77,12 +79,53 @@ function ClientListPage() {
                 <td>{item.client_username}</td>
                 <td>{item.client_email}</td>
                 <td>{item.client_phone}</td>
+                <td className="text-nowrap">
+                  <div className="d-flex gap-2">
+                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onClick={() => setSelectedClient(item)}>Update</button>
+                    <button className="btn btn-danger" >Delete</button>
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </section>
+
+      {/* Modal */}
+      <div className="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content bg-dark text-white">
+            <div className="modal-header">
+              <h5 className="modal-title" id="editModalLabel">Edit Client Information</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+            <label>ClientID</label>
+            <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
+
+            <label>Name</label>
+            <input className="form-control" name="clientname" type="text" value={`${selectedClient?.client_fname} ${selectedClient?.client_lname}`} readOnly/>
+
+            <label>Username</label>
+            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username} readOnly/>
+
+            <label>Email</label>
+            <input className="form-control" name="clientemail" type="text" value={selectedClient?.client_email} readOnly/>
+
+            <label>Phone Number</label>
+            <input className="form-control" name="clientphone" type="text" value={selectedClient?.client_phone} readOnly/>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    
   );
 }
 
