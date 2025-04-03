@@ -9,6 +9,7 @@ function StockInsertPage() {
     inventory_description: '',
     inventory_type: 'Console',
     inventory_price: '',
+    inventory_num: '',
     inventory_condition: 'New',
     inventory_special_edition: 'false',
     inventory_manual: 'false',
@@ -75,6 +76,7 @@ function StockInsertPage() {
           <input name="inventory_name" placeholder="Name" value={formData.inventory_name} onChange={handleChange} required />
           <input name="inventory_description" placeholder="Description" value={formData.inventory_description} onChange={handleChange} required />
           <input name="inventory_price" placeholder="Price" type="number" value={formData.inventory_price} onChange={handleChange} required />
+          <input name="inventory_num" placeholder="Quantity" type="number" value={formData.inventory_num} onChange={handleChange} required />
 
           <label>Type:</label>
           <select name="inventory_type" value={formData.inventory_type} onChange={handleChange}>

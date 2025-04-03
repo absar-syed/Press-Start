@@ -148,19 +148,19 @@ function ClientListPage() {
             <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
 
             <label>First Name</label>
-            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_fname} onChange={(e) => setSelectedClient({ ...selectedClient, client_fname: e.target.value })}/>
+            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_fname || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_fname: e.target.value })}/>
 
             <label>Last Name</label>
-            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_lname} onChange={(e) => setSelectedClient({ ...selectedClient, client_lname: e.target.value })}/>
+            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_lname || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_lname: e.target.value })}/>
 
             <label>Username</label>
-            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username} onChange={(e) => setSelectedClient({ ...selectedClient, client_username: e.target.value })}/>
+            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_username: e.target.value })}/>
 
             <label>Email</label>
-            <input className="form-control" name="clientemail" type="email" value={selectedClient?.client_email} onChange={(e) => setSelectedClient({ ...selectedClient, client_email: e.target.value })}/>
+            <input className="form-control" name="clientemail" type="email" required value={selectedClient?.client_email || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_email: e.target.value })}/>
 
             <label>Phone Number</label>
-            <input className="form-control" name="clientphone" type="text" value={selectedClient?.client_phone} onChange={(e) => setSelectedClient({ ...selectedClient, client_phone: e.target.value })}/>
+            <input className="form-control" name="clientphone" type="number" min='1' max='9999999999' value={selectedClient?.client_phone || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_phone: e.target.value })}/>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

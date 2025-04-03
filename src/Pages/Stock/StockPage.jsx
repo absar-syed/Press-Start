@@ -103,6 +103,7 @@ function StockPage() {
               <th>Description</th>
               <th>Condition</th>
               <th>Price</th>
+              <th>Quantity</th>
               <th>Special Edition</th>
               <th>Manual</th>
               <th>Box</th>
@@ -118,6 +119,7 @@ function StockPage() {
                 <td>{item.inventory_description}</td>
                 <td>{item.inventory_condition}</td>
                 <td>{item.inventory_price}</td>
+                <td>{item.inventory_num}</td>
                 <td>{item.inventory_special_edition ? 'Yes' : 'No'}</td>
                 <td>{item.inventory_manual ? 'Yes' : 'No'}</td>
                 <td>{item.inventory_box ? 'Yes' : 'No'}</td>
@@ -166,6 +168,9 @@ function StockPage() {
 
               <label>Price</label>
               <input className="form-control" name="inventory_price" type="number" value={editValues.inventory_price} onChange={handleEditChange} />
+
+              <label>Quantity</label>
+              <input className="form-control" name="inventory_num" type="number" value={editValues.inventory_num} onChange={handleEditChange} />
 
               <label>Special Edition</label>
               <div className="form-check">
