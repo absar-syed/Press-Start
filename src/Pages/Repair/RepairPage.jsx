@@ -108,6 +108,7 @@ function RepairPage() {
             value={form.repair_item}
             onChange={handleChange}
             required
+            maxLength={25}
           />
 
           <label>Description of Issue</label>
@@ -116,14 +117,13 @@ function RepairPage() {
             value={form.repair_issue}
             onChange={handleChange}
             required
+            maxLength={250}
           />
 
           <label>Start Date (MM/DD/YY)</label>
           <input
-            type="text"
+            type="date"
             name="repair_start_date"
-            placeholder="MM/DD/YY"
-            pattern="^\d{2}/\d{2}/\d{2}$"  
             value={form.repair_start_date}
             onChange={handleChange}
             required
