@@ -72,11 +72,11 @@ function StockInsertPage() {
       <section className="stock-insert-page">
         <h2>Add New Inventory Item</h2>
         {message && <p>{message}</p>}
-        <form onSubmit={handleSubmit}>
-          <input name="inventory_name" placeholder="Name" value={formData.inventory_name} onChange={handleChange} required />
-          <input name="inventory_description" placeholder="Description" value={formData.inventory_description} onChange={handleChange} required />
-          <input name="inventory_price" placeholder="Price" type="number" value={formData.inventory_price} onChange={handleChange} required />
-          <input name="inventory_num" placeholder="Quantity" type="number" value={formData.inventory_num} onChange={handleChange} required />
+        <form className='mb-5' onSubmit={handleSubmit}>
+          <input name="inventory_name" placeholder="Name" value={formData.inventory_name} onChange={handleChange} required maxLength="50"/>
+          <input name="inventory_description" placeholder="Description" value={formData.inventory_description} onChange={handleChange} required maxLength="250"/>
+          <input name="inventory_price" placeholder="Price" type="number" min={0}  value={formData.inventory_price} onChange={handleChange} required />
+          <input name="inventory_num" placeholder="Quantity" type="number" min={0} max={100} value={formData.inventory_num} onChange={handleChange} required />
 
           <label>Type:</label>
           <select name="inventory_type" value={formData.inventory_type} onChange={handleChange}>

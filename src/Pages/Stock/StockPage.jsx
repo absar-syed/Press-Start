@@ -58,6 +58,8 @@ function StockPage() {
 
       setInventory((prev) => prev.map(item => item.inventoryid === id ? { ...item, ...editValues } : item));
       setEditingId(null);
+
+      alert('Item updated successfully');
     } catch (err) {
       console.error(err);
       alert("Error saving changes.");
