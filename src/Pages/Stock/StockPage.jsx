@@ -149,6 +149,7 @@ function StockPage() {
               <h5 className="modal-title" id="editModalLabel">Edit Inventory</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <form className='m-2' onSubmit={(e) => { e.preventDefault(); saveChanges(editingId); }}>
               <label>Item Type</label>
               <select className="form-control" name="inventory_type" value={editValues.inventory_type} onChange={handleEditChange}>
@@ -219,12 +220,6 @@ function StockPage() {
                 <button type="submit" className="btn btn-success" data-bs-dismiss="modal">Save Changes</button>
               </div>
             </form>
-
-
-            {/* <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={cancelEdit} data-bs-dismiss="modal">Cancel</button>
-              <button type="button" className="btn btn-success" onClick={() => saveChanges(editingId)} data-bs-dismiss="modal">Save Changes</button>
-            </div> */}
           </div>
         </div>
       </div>
