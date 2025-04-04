@@ -23,7 +23,7 @@ function LoginForm() {
     setError('');
 
     // Send login credentials to the server
-    fetch("http://localhost:5000/login", {
+    fetch("https://press-start-api.onrender.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include", // Important for sending cookies (sessions)

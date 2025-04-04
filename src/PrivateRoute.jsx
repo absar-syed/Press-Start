@@ -7,7 +7,7 @@ const PrivateRoute = ({ children }) => {
   
     useEffect(() => {
       // Check if user is authenticated by calling your profile endpoint
-      fetch("http://localhost:5000/profile", {
+      fetch("https://press-start-api.onrender.com/profile", {
         credentials: "include", // ensures cookies are sent
       })
         .then((res) => {
