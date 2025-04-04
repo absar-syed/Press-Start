@@ -1,3 +1,6 @@
+// Form for registering new client with Supabase
+// Redirects to client list after submission
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Components/Navbar';

@@ -1,3 +1,5 @@
+// Rotating fullscreen carousel with game images and captions
+
 import { useState, useEffect } from 'react';
 import Navbar from '../../Components/Navbar';
 import './HomePage.css';

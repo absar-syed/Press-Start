@@ -1,3 +1,6 @@
+// Form to add new inventory
+// Uses state to manage form values and submit
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Components/Navbar';

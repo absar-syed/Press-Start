@@ -1,3 +1,7 @@
+// Main app routing logic
+// Routes include login, homepage, stock, repair, clients, etc.
+// Protects some routes using <PrivateRoute>
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import HomePage from './Pages/Home/HomePage';

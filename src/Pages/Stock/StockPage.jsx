@@ -1,3 +1,5 @@
+// Displays all inventory items with search and add button
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StockPage.css';

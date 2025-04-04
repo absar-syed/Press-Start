@@ -1,3 +1,4 @@
+// Simple footer with copyright notice for all pages
 import React from 'react';
 import './Footer.css';
 

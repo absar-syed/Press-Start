@@ -1,4 +1,6 @@
-// ClientListPage.jsx
+// Shows table of all clients from receipts
+// Includes search and signup button
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ClientListPage.css';
