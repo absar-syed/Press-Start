@@ -1,4 +1,6 @@
-// ClientListPage.jsx
+// Shows table of all clients from receipts
+// Includes search and signup button
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ClientListPage.css';
@@ -9,9 +11,11 @@ function ClientListPage() {
   const [search, setSearch] = useState('');
   const [selectedClient, setSelectedClient] = useState(null);
   const navigate = useNavigate();
+  const [editingId, setEditingId] = useState(null);
+  const [editValues, setEditValues] = useState({});
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/clients')
+    fetch('https://press-start-api.onrender.com/api/clients')
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
@@ -47,7 +51,7 @@ function ClientListPage() {
   const deleteClient = async (id) => {
     if (!window.confirm("Are you sure you want to delete this client?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
+      const res = await fetch(`https://press-start-api.onrender.com/api/clients/${id}`, {
         method: 'DELETE'
       });
  
@@ -64,7 +68,7 @@ function ClientListPage() {
       if (!selectedClient) return;
     
       try {
-        const res = await fetch(`http://localhost:5000/api/clients/${selectedClient.clientid}`, {
+        const res = await fetch(`https://press-start-api.onrender.com/api/clients/${selectedClient.clientid}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(selectedClient)
@@ -84,6 +88,36 @@ function ClientListPage() {
         console.error(err);
         alert('Error updating client.');
       }
+    };
+
+    const saveChanges = async (id) => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(editValues),
+        });
+  
+        if (!res.ok) throw new Error('Update failed');
+
+        setClients((prevClients) =>
+          prevClients.map((client) =>
+            client.clientid === selectedClient.clientid ? selectedClient : client
+          )
+        );
+  
+        alert('Client updated successfully');
+      } catch (err) {
+        console.error(err);
+        alert("Error saving changes.");
+      }
+    };
+
+    const startEditing = (item) => {
+      setEditingId(item.inventoryid);
+      setEditValues({
+        ...item,  // Include all the fields needed to edit
+      });
     };
     
 
@@ -143,29 +177,32 @@ function ClientListPage() {
               <h5 className="modal-title" id="editModalLabel">Edit Client Information</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div className="modal-body">
-            <label>ClientID (Read-Only)</label>
-            <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
+            <form className="modal-body" onSubmit={updateClient}>
+              <label>ClientID (Read-Only)</label>
+              <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
 
-            <label>First Name</label>
-            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_fname || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_fname: e.target.value })}/>
+              <label>First Name</label>
+              <input className="form-control" name="clientname" type="text" required maxLength={25} value={selectedClient?.client_fname || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_fname: e.target.value })}/>
 
-            <label>Last Name</label>
-            <input className="form-control" name="clientname" type="text" value={selectedClient?.client_lname || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_lname: e.target.value })}/>
+              <label>Last Name</label>
+              <input className="form-control" name="clientname" type="text" required maxLength={25} value={selectedClient?.client_lname || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_lname: e.target.value })}/>
 
-            <label>Username</label>
-            <input className="form-control" name="clientusername" type="text" value={selectedClient?.client_username || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_username: e.target.value })}/>
+              <label>Username</label>
+              <input className="form-control" name="clientusername" type="text" required maxLength={25} value={selectedClient?.client_username || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_username: e.target.value })}/>
 
-            <label>Email</label>
-            <input className="form-control" name="clientemail" type="email" required value={selectedClient?.client_email || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_email: e.target.value })}/>
+              <label>Email</label>
+              <input className="form-control" name="clientemail" type="email" required maxLength={100} value={selectedClient?.client_email || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_email: e.target.value })} />
 
-            <label>Phone Number</label>
-            <input className="form-control" name="clientphone" type="number" min='1' max='9999999999' value={selectedClient?.client_phone || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_phone: e.target.value })}/>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={updateClient}>Save Changes</button>
-            </div>
+              <label>Phone Number</label>
+              <input className="form-control" name="clientphone" type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" min='1' max='9999999999' value={selectedClient?.client_phone || ''} onChange={(e) => setSelectedClient({ ...selectedClient, client_phone: e.target.value })}/>
+
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" className="btn btn-success" data-bs-dismiss="modal" >Save Changes</button>
+              </div>
+
+            </form>
+
           </div>
         </div>
       </div>

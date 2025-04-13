@@ -1,3 +1,6 @@
+// Login form with username/password
+// Sends POST to /login and redirects to /stock on success
+
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +26,7 @@ function LoginForm() {
     setError('');
 
     // Send login credentials to the server
-    fetch("http://localhost:5000/login", {
+    fetch("https://press-start-api.onrender.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include", // Important for sending cookies (sessions)

@@ -1,3 +1,6 @@
+// Form for registering new client with Supabase
+// Redirects to client list after submission
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Components/Navbar';
@@ -24,7 +27,7 @@ function ClientSignUpPage() {
     e.preventDefault();
     setMessage('');
     try {
-      const res = await fetch('http://localhost:5000/api/clients/signup', {
+      const res = await fetch('https://press-start-api.onrender.com/api/clients/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

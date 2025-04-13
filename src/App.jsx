@@ -1,3 +1,7 @@
+// Main app routing logic
+// Routes include login, homepage, stock, repair, clients, etc.
+// Protects some routes using <PrivateRoute>
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import HomePage from './Pages/Home/HomePage';
@@ -16,7 +20,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/profile", { credentials: "include" })
+    fetch("https://press-start-api.onrender.com/profile", { credentials: "include" })
       .then((res) => {
         console.log("Profile response status:", res.status);
         if (res.ok) {

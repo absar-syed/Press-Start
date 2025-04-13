@@ -1,3 +1,5 @@
+// Shows list of all repair orders with search
+
 import { useState, useEffect } from 'react';
 import Navbar from '../../Components/Navbar';
 import './RepairListPage.css';
@@ -7,7 +9,7 @@ function RepairListPage() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/repairs')
+    fetch('https://press-start-api.onrender.com/api/repairs')
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {

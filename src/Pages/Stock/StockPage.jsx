@@ -1,3 +1,5 @@
+// Displays all inventory items with search and add button
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StockPage.css';
@@ -12,7 +14,7 @@ function StockPage() {
 
   // Fetch inventory
   useEffect(() => {
-    fetch('http://localhost:5000/api/inventory')
+    fetch('https://press-start-api.onrender.com/api/inventory')
       .then((res) => res.json())
       .then((result) => {
         if (result.data) setInventory(result.data);
@@ -48,7 +50,7 @@ function StockPage() {
 
   const saveChanges = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/inventory/${id}`, {
+      const res = await fetch(`https://press-start-api.onrender.com/api/inventory/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editValues),
@@ -74,7 +76,7 @@ function StockPage() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this item?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/inventory/${id}`, {
+      const res = await fetch(`https://press-start-api.onrender.com/api/inventory/${id}`, {
         method: 'DELETE',
       });
 

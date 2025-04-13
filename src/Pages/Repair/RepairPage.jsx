@@ -1,3 +1,6 @@
+// Form to create a new repair order
+// Pulls clients and employees from API
+
 import { useState, useEffect } from 'react';
 import Navbar from '../../Components/Navbar';
 import './RepairPage.css';
@@ -15,12 +18,12 @@ function RepairPage() {
   });
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/clients-list')
+    fetch('https://press-start-api.onrender.com/api/clients-list')
       .then(res => res.json())
       .then(result => setClients(result.data || []))
       .catch(err => console.error(err));
 
-    fetch('http://localhost:5000/api/employees')
+    fetch('https://press-start-api.onrender.com/api/employees')
       .then(res => res.json())
       .then(result => setEmployees(result.data || []))
       .catch(err => console.error(err));
@@ -41,7 +44,7 @@ function RepairPage() {
       // form.repair_start_date is already "MM/DD/YY" at this point
       const payload = { ...form };
 
-      const res = await fetch('http://localhost:5000/api/repairs', {
+      const res = await fetch('https://press-start-api.onrender.com/api/repairs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

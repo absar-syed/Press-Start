@@ -1,8 +1,11 @@
+// Quick script to test PostgreSQL connection
+// Queries Employees table to verify DB access
+
 const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL, // e.g., your connection string from the .env file
+  connectionString: process.env.DATABASE_URL, 
   ssl: { rejectUnauthorized: false },
 });
 
