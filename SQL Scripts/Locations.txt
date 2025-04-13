@@ -1,0 +1,21 @@
+-- Absar Syed
+-- 03/11/2025
+-- Script for Locations table
+
+DROP TABLE IF EXISTS Locations cascade;
+
+DROP SEQUENCE IF EXISTS LocationsID_seq;
+
+CREATE SEQUENCE LocationsID_seq START WITH 4000;
+
+CREATE TABLE Locations (
+
+  LocationID                int          not null default nextval('LocationsID_seq') primary key,
+  Location_city             varchar(25)  not null,
+  Location_street_address   varchar(50)  not null,
+  Location_postal_code      char(7)      not null
+
+);
+
+INSERT INTO Locations (Location_city, Location_street_address, Location_postal_code) values 
+  ('Oshawa', '102 King Street', '7x7 g7g')

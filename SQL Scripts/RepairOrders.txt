@@ -1,0 +1,23 @@
+-- Absar Syed
+-- 03/11/2025
+-- Script for RepairOrders table
+
+DROP TABLE IF EXISTS RepairOrders;
+
+DROP SEQUENCE IF EXISTS RepairOrdersID_seq;
+
+CREATE SEQUENCE RepairOrdersID_seq START WITH 3000;
+
+CREATE TABLE RepairOrders (
+
+  RepairOrdersID      INT          NOT NULL DEFAULT NEXTVAL('RepairOrdersID_seq') PRIMARY KEY,
+  Repair_item         varchar(25)  NOT NULL,
+  Repair_issue        varchar(250) NOT NULL,
+  Repair_start_date   char(10)      NOT NULL, 
+  employeeid          INT          not null references employees(employeeid),
+  clientid            int          not null references clients(clientid)
+);
+
+INSERT INTO RepairOrders (Repair_item, Repair_issue, Repair_start_date, employeeid, clientid) VALUES
+  ('N64', 'the console runs too hot and makes lots of noise', '2025-04-03', 1000, 2000),
+  ('Atari 2600', 'doesnt take any discs', '2025-02-03', 1001, 2001) 

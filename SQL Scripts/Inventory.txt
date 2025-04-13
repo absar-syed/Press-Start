@@ -1,0 +1,38 @@
+-- Absar Syed
+-- 03/11/2025
+-- Script for Inventory table
+
+DROP TABLE IF EXISTS Inventory cascade;
+
+DROP SEQUENCE IF EXISTS InventoryID_seq;
+
+drop type if exists Inventory_type_enum;
+
+drop type if exists inventory_condition_enum;
+
+CREATE SEQUENCE InventoryID_seq START WITH 6000;
+
+create type Inventory_type_enum as enum ('Game', 'Console', 'Accessory');
+
+create type inventory_condition_enum as enum ('Retro-Excellent', 'Retro-Good', 'Retro-Poor', 'New');
+
+CREATE TABLE Inventory (
+
+  InventoryID                 int                       not null default nextval('InventoryID_seq') primary key,
+  Inventory_name              varchar(50)               not null,
+  Inventory_description       varchar(250)              not null,
+  Inventory_type              Inventory_type_enum       not null,
+  Inventory_price             int                       not null,
+  Inventory_num               int                       not null,
+  Inventory_condition         inventory_condition_enum  not null,
+  Inventory_special_edition   boolean                   not null,
+  Inventory_manual            boolean                   not null,
+  Inventory_box               boolean                   not null,
+  clientid                    int                       references clients(clientid),
+  locationid                  int                       references locations(locationid)
+
+);
+
+insert into Inventory(Inventory_name, Inventory_description, Inventory_type, Inventory_price, Inventory_num, Inventory_condition, Inventory_special_edition, Inventory_manual, Inventory_box, clientid, locationid) values
+  ('PS1', 'Original Play Station 1 in good condition with minor scratches', 'Console', 25, 5, 'Retro-Good', false, false, false, 2002, 4000),
+  ('PS5', 'brand new next gen console playstation 5', 'Console', 599.99, 10, 'New', false, true, true, null, 4000)

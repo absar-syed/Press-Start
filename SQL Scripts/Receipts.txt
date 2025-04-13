@@ -1,0 +1,22 @@
+-- Absar Syed
+-- 03/11/2025
+-- Script for Receipts table
+
+DROP TABLE IF EXISTS Receipts cascade;
+
+DROP SEQUENCE IF EXISTS ReceiptsID_seq;
+
+CREATE SEQUENCE ReceiptsID_seq START WITH 5000;
+
+CREATE TABLE Receipts (
+
+  ReceiptID                int      not null default nextval('ReceiptsID_seq') primary key,
+  Receipt_date             char(8)  not null,
+  clientid                 int references clients(clientid),
+  employeeid               int references employees(employeeid)
+
+);
+
+INSERT INTO Receipts (Receipt_date, clientid, employeeid) values 
+  ('03/10/25', '2000' ,'1001'),
+  ('03/08/25', '2000', '1000')

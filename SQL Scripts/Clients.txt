@@ -1,0 +1,29 @@
+-- Absar Syed
+-- 03/06/2025
+-- Script for clients table
+
+DROP TABLE IF EXISTS Clients cascade;
+
+DROP SEQUENCE IF EXISTS ClientsID_seq;
+
+create extension if not exists pgcrypto;
+
+CREATE SEQUENCE ClientsID_seq START WITH 2000;
+
+CREATE TABLE Clients (
+
+  ClientID          INT          NOT NULL DEFAULT NEXTVAL('ClientsID_seq') PRIMARY KEY,
+  Client_fname      varchar(25)  NOT NULL,
+  Client_lname      varchar(25)  NOT NULL,
+  Client_email      varchar(100) NOT NULL UNIQUE,
+  Client_phone      char(10)     NOT NULL UNIQUE,
+  Client_username   char(25)     not null unique,
+  client_password   text         not null unique
+
+);
+
+INSERT INTO Clients (Client_fname, Client_lname, Client_email, Client_phone, client_username, client_password) VALUES
+
+  ('Colin', 'Bond', 'conlin.bond@dcmail.ca', '1239873456', 'ladysman217', crypt('password', gen_salt('bf')) ),
+  ('Muhammad', 'Anwar', 'muhammad.anwar@dcmail.ca', '1231239087', 'cowboy',  crypt('12345', gen_salt('bf'))),
+  ('John', 'Smith', 'johnnysmithers@gmail.com', '3453217854', 'bigman', crypt('biggie', gen_salt('bf')))

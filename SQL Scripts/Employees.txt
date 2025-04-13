@@ -1,0 +1,28 @@
+-- Absar Syed
+-- 03/06/2025
+-- Script for employees table
+
+DROP TABLE IF EXISTS Employees cascade;
+
+DROP SEQUENCE IF EXISTS EmployeesID_seq;
+
+create extension if not exists pgcrypto;
+
+CREATE SEQUENCE EmployeesID_seq START WITH 1000;
+
+CREATE TABLE Employees (
+
+  EmployeeID          INT          NOT NULL DEFAULT NEXTVAL('EmployeesID_seq') PRIMARY KEY,
+  Employee_fname      varchar(25)  NOT NULL,
+  Employee_lname      varchar(25)  NOT NULL,
+  Employee_email      varchar(100) NOT NULL UNIQUE,
+  Employee_phone      char(10)     NOT NULL UNIQUE,
+  Employee_username   varchar(25)  not null unique,
+  Employee_password   text         not null unique
+
+);
+
+INSERT INTO Employees (Employee_fname, Employee_lname, Employee_email, Employee_phone, Employee_username, Employee_password) VALUES
+
+  ('Absar', 'Syed', 'absar.syed@dcmail.ca', '6477621234', 'admin', crypt('12345', gen_salt('bf'))),
+  ('Harrion', 'Vigneswaran', 'harrion.vigneswaran@dcmail.ca', '2347651234', 'Harry', crypt('pass', gen_salt('bf')))

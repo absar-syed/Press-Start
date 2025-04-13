@@ -1,0 +1,18 @@
+-- Absar Syed
+-- 03/11/2025
+-- Script for Lines table
+
+DROP TABLE IF EXISTS Lines;
+
+CREATE TABLE Lines (
+
+  receiptid                 int not null references receipts(receiptid),
+  Line_number               int not null,
+  inventoryid               int not null references inventory(inventoryid),
+  line_quantity             int not null, 
+  primary key (receiptid, line_number)
+
+);
+
+INSERT INTO lines (receiptid, line_number, inventoryid, line_quantity) values
+  (5000, 1, 6000, 1)
