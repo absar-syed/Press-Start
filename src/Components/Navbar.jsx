@@ -19,7 +19,7 @@ function Navbar() {
   useEffect(() => {
     const fetchCurrentUser = async (retryCount = 0) => {
       try {
-        const res = await fetch(`https://press-start-api.onrender.com/profile`, {
+        const res = await fetch(`http://localhost:5000/profile`, {
           credentials: 'include'
         });
         if (res.status === 401) {
@@ -41,7 +41,7 @@ function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    fetch("https://press-start-api.onrender.com/logout", {
+    fetch("http://localhost:5000/logout", {
       method: "POST",
       credentials: "include",
     })

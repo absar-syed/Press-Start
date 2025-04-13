@@ -25,7 +25,7 @@ function StockInsertPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://press-start-api.onrender.com/api/locations')
+    fetch('http://localhost:5000/api/locations')
       .then(res => res.json())
       .then(result => {
         if (result.data) setLocations(result.data);
@@ -52,7 +52,7 @@ function StockInsertPage() {
     };
 
     try {
-      const res = await fetch('https://press-start-api.onrender.com/api/inventory/update', {
+      const res = await fetch('http://localhost:5000/api/inventory/update', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)

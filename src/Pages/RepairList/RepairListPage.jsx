@@ -9,7 +9,7 @@ function RepairListPage() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch('https://press-start-api.onrender.com/api/repairs')
+    fetch('http://localhost:5000/api/repairs')
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {

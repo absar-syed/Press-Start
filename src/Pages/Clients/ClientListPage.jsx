@@ -15,7 +15,7 @@ function ClientListPage() {
   const [editValues, setEditValues] = useState({});
 
   useEffect(() => {
-    fetch('https://press-start-api.onrender.com/api/clients')
+    fetch('http://localhost:5000/api/clients')
       .then((response) => response.json())
       .then((result) => {
         if (result.data) {
@@ -51,7 +51,7 @@ function ClientListPage() {
   const deleteClient = async (id) => {
     if (!window.confirm("Are you sure you want to delete this client?")) return;
     try {
-      const res = await fetch(`https://press-start-api.onrender.com/api/clients/${id}`, {
+      const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
         method: 'DELETE'
       });
  
@@ -68,7 +68,7 @@ function ClientListPage() {
       if (!selectedClient) return;
     
       try {
-        const res = await fetch(`https://press-start-api.onrender.com/api/clients/${selectedClient.clientid}`, {
+        const res = await fetch(`http://localhost:5000/api/clients/${selectedClient.clientid}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(selectedClient)

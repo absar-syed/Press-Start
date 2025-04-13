@@ -20,7 +20,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    fetch("https://press-start-api.onrender.com/profile", { credentials: "include" })
+    fetch("http://localhost:5000/profile", { credentials: "include" })
       .then((res) => {
         console.log("Profile response status:", res.status);
         if (res.ok) {
