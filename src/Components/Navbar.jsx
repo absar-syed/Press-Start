@@ -3,7 +3,7 @@
 // When logged in: show full menu with logout
 // When not logged in: show login only
 
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
@@ -13,50 +13,50 @@ import { faGamepad, faHouse, faDoorClosed, faDoorOpen, faWarehouse, faScrewdrive
 
 
 function Navbar() {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCurrentUser = async (retryCount = 0) => {
-      try {
-        const res = await fetch(`http://localhost:5000/profile`, {
-          credentials: 'include'
-        });
-        if (res.status === 401) {
-          setUser(null);
-          return;
-        }
-        if (!res.ok) throw new Error('Failed to fetch user');
-        const userData = await res.json();
-        setUser(userData);
-      } catch (err) {
-        console.error(err);
-        // Optional: retry logic
-        if (retryCount < 3) {
-          setTimeout(() => fetchCurrentUser(retryCount + 1), 1000 * (retryCount + 1));
-        }
-      }
-    };
-    fetchCurrentUser();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCurrentUser = async (retryCount = 0) => {
+  //     try {
+  //       const res = await fetch(`http://localhost:5000/profile`, {
+  //         credentials: 'include'
+  //       });
+  //       if (res.status === 401) {
+  //         setUser(null);
+  //         return;
+  //       }
+  //       if (!res.ok) throw new Error('Failed to fetch user');
+  //       const userData = await res.json();
+  //       setUser(userData);
+  //     } catch (err) {
+  //       console.error(err);
+  //       // Optional: retry logic
+  //       if (retryCount < 3) {
+  //         setTimeout(() => fetchCurrentUser(retryCount + 1), 1000 * (retryCount + 1));
+  //       }
+  //     }
+  //   };
+  //   fetchCurrentUser();
+  // }, []);
 
-  const handleLogout = () => {
-    fetch("http://localhost:5000/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((res) => {
-        if (res.ok) {
-          setUser(null);
-          navigate("/login");
-        } else {
-          throw new Error("Logout failed");
-        }
-      })
-      .catch((err) => {
-        console.error("Logout error:", err);
-      });
-  };
+  // const handleLogout = () => {
+  //   fetch("http://localhost:5000/logout", {
+  //     method: "POST",
+  //     credentials: "include",
+  //   })
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         setUser(null);
+  //         navigate("/login");
+  //       } else {
+  //         throw new Error("Logout failed");
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error("Logout error:", err);
+  //     });
+  // };
 
   return (
     <nav className="navbar">
@@ -72,28 +72,28 @@ function Navbar() {
         {/* Always show Home link */}
         <li><Link to="/"><FontAwesomeIcon icon= {faHouse} size="lg" /> Home</Link></li>
         
-        {user ? (
+        {/* {user ? (
           /* Links shown only if user is logged in */
-          <>
-            <li><Link to="/stock"><FontAwesomeIcon icon={faWarehouse} size="lg"/> Stock</Link></li>
-            <li><Link to="/repair-list"><FontAwesomeIcon icon={faToolbox} size="lg"/> Repair List</Link></li>
-            <li><Link to="/repair"><FontAwesomeIcon icon={faScrewdriverWrench} size="lg" /> Repair</Link></li>
-            <li><Link to="/clients"><FontAwesomeIcon icon={faUserTie} size="lg" /> Clients</Link></li>
-            <li>
-              <button onClick={handleLogout}><FontAwesomeIcon icon={faDoorOpen} size="lg" /> Logout</button>
-            </li>
-          </>
-        ) : (
+          // <>
+          //   <li><Link to="/stock"><FontAwesomeIcon icon={faWarehouse} size="lg"/> Stock</Link></li>
+          //   <li><Link to="/repair-list"><FontAwesomeIcon icon={faToolbox} size="lg"/> Repair List</Link></li>
+          //   <li><Link to="/repair"><FontAwesomeIcon icon={faScrewdriverWrench} size="lg" /> Repair</Link></li>
+          //   <li><Link to="/clients"><FontAwesomeIcon icon={faUserTie} size="lg" /> Clients</Link></li>
+          //   <li>
+          //     <button ><FontAwesomeIcon icon={faDoorOpen} size="lg" /> Logout</button>
+          //   </li>
+          // </>
+          // ) : (
           /* Links shown only if user is NOT logged in */
-          <>
-            <li>
-  <            Link to="/login">
-            <button className="nav-btn"><FontAwesomeIcon icon={faDoorClosed} size="lg" /> Login</button>
-              </Link>
-            </li>
+        //   <>
+        //     <li>
+        //       <Link to="/login">
+        //       <button className="nav-btn"><FontAwesomeIcon icon={faDoorClosed} size="lg" /> Login</button>
+        //       </Link>
+        //     </li>
 
-          </>
-        )}
+        //   </>
+        // )} */}
       </ul>
     </nav>
   );

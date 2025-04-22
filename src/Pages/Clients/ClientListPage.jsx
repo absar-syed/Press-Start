@@ -5,25 +5,32 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ClientListPage.css';
 import Navbar from '../../Components/Navbar';
+import { supabase } from '../src/supabaseClient';
 
-function ClientListPage() {
-  const [clients, setClients] = useState([]);
+async function ClientListPage() {
+  // const [clients, setClients] = useState([]);
   const [search, setSearch] = useState('');
   const [selectedClient, setSelectedClient] = useState(null);
   const navigate = useNavigate();
   const [editingId, setEditingId] = useState(null);
   const [editValues, setEditValues] = useState({});
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/clients')
-      .then((response) => response.json())
-      .then((result) => {
-        if (result.data) {
-          setClients(result.data);
-        }
-      })
-      .catch((error) => console.error('Error fetching clients:', error));
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://localhost:5000/api/clients')
+  //     .then((response) => response.json())
+  //     .then((result) => {
+  //       if (result.data) {
+  //         setClients(result.data);
+  //       }
+  //     })
+  //     .catch((error) => console.error('Error fetching clients:', error));
+  // }, []);
+
+
+  let { data: clients, error } = await supabase
+  .from('clients')
+  .select('*')
+          
 
   const filteredClients = clients.filter((item) => {
     const searchTerm = search.toLowerCase();
@@ -48,77 +55,77 @@ function ClientListPage() {
   const displayClients = search ? filteredClients : clients;
 
   // delete client
-  const deleteClient = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this client?")) return;
-    try {
-      const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
-        method: 'DELETE'
-      });
+  // const deleteClient = async (id) => {
+  //   if (!window.confirm("Are you sure you want to delete this client?")) return;
+  //   try {
+  //     const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
+  //       method: 'DELETE'
+  //     });
  
-      if (!res.ok) throw new Error('Delete failed');
+  //     if (!res.ok) throw new Error('Delete failed');
       
-      setClients((prevClients) => prevClients.filter((client) => client.clientid !== id));
-    } catch (err) {
-      console.error(err);
-      alert("Error deleting client.");
-    }};
+  //     setClients((prevClients) => prevClients.filter((client) => client.clientid !== id));
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert("Error deleting client.");
+  //   }};
   
     // update client
-    const updateClient = async () => {
-      if (!selectedClient) return;
+    // const updateClient = async () => {
+    //   if (!selectedClient) return;
     
-      try {
-        const res = await fetch(`http://localhost:5000/api/clients/${selectedClient.clientid}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(selectedClient)
-        });
+    //   try {
+    //     const res = await fetch(`http://localhost:5000/api/clients/${selectedClient.clientid}`, {
+    //       method: 'PUT',
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify(selectedClient)
+    //     });
     
-        if (!res.ok) throw new Error('Update failed');
+    //     if (!res.ok) throw new Error('Update failed');
     
-        // Update state
-        setClients((prevClients) =>
-          prevClients.map((client) =>
-            client.clientid === selectedClient.clientid ? selectedClient : client
-          )
-        );
+    //     // Update state
+    //     setClients((prevClients) =>
+    //       prevClients.map((client) =>
+    //         client.clientid === selectedClient.clientid ? selectedClient : client
+    //       )
+    //     );
     
-        alert('Client updated successfully');
-      } catch (err) {
-        console.error(err);
-        alert('Error updating client.');
-      }
-    };
+    //     alert('Client updated successfully');
+    //   } catch (err) {
+    //     console.error(err);
+    //     alert('Error updating client.');
+    //   }
+    // };
 
-    const saveChanges = async (id) => {
-      try {
-        const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(editValues),
-        });
+    // const saveChanges = async (id) => {
+    //   try {
+    //     const res = await fetch(`http://localhost:5000/api/clients/${id}`, {
+    //       method: 'PUT',
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify(editValues),
+    //     });
   
-        if (!res.ok) throw new Error('Update failed');
+    //     if (!res.ok) throw new Error('Update failed');
 
-        setClients((prevClients) =>
-          prevClients.map((client) =>
-            client.clientid === selectedClient.clientid ? selectedClient : client
-          )
-        );
+    //     setClients((prevClients) =>
+    //       prevClients.map((client) =>
+    //         client.clientid === selectedClient.clientid ? selectedClient : client
+    //       )
+    //     );
   
-        alert('Client updated successfully');
-      } catch (err) {
-        console.error(err);
-        alert("Error saving changes.");
-      }
-    };
+    //     alert('Client updated successfully');
+    //   } catch (err) {
+    //     console.error(err);
+    //     alert("Error saving changes.");
+    //   }
+    // };
 
-    const startEditing = (item) => {
-      setEditingId(item.inventoryid);
-      setEditValues({
-        ...item,  // Include all the fields needed to edit
-      });
-    };
+    // const startEditing = (item) => {
+    //   setEditingId(item.inventoryid);
+    //   setEditValues({
+    //     ...item,  // Include all the fields needed to edit
+    //   });
+    // };
     
 
   return (
@@ -159,8 +166,8 @@ function ClientListPage() {
                 <td>{item.client_phone}</td>
                 <td className="text-nowrap">
                   <div className="d-flex gap-2">
-                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal" onClick={() => setSelectedClient(item)}>Update</button>
-                    <button className="btn btn-danger" onClick={() => deleteClient(item.clientid)}>Delete</button>
+                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal">Update</button>
+                    <button className="btn btn-danger">Delete</button>
                   </div>
                 </td>
               </tr>
@@ -177,7 +184,7 @@ function ClientListPage() {
               <h5 className="modal-title" id="editModalLabel">Edit Client Information</h5>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form className="modal-body" onSubmit={updateClient}>
+            <form className="modal-body" >
               <label>ClientID (Read-Only)</label>
               <input className="form-control" name="clientid" type="text"  value={selectedClient?.clientid} readOnly/>
 
